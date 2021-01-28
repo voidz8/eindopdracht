@@ -36,7 +36,7 @@ public class Machine {
     @Getter
     @Setter
     @ManyToMany(mappedBy = "drawing")
-    private Set<Drawing> drawings = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 
     @Getter
     @Setter
@@ -46,18 +46,4 @@ public class Machine {
     public Machine() {
     }
 
-    public Machine(String machine, Set<Employee> employees) {
-        this.machine = machine;
-        this.employees = employees;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Machine{" +
-                "id=" + id +
-                ", machine='" + machine + '\'' +
-                ", employees=" + employees +
-                '}';
-    }
 }

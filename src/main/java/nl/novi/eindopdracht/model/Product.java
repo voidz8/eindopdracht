@@ -18,7 +18,7 @@ import java.util.Set;
 
 @Table(name = "drawing")
 @Entity
-public class Drawing {
+public class Product {
 
     @Getter
     @Setter
@@ -51,7 +51,7 @@ public class Drawing {
     @ManyToMany(mappedBy = "order")
     private Set<Order> orders = new HashSet<>();
 
-    public Drawing() {
+    public Product() {
     }
 
 }
