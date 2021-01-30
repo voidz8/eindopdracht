@@ -9,14 +9,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.time.Duration;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Table(name = "drawing")
+@Table(name = "product")
 @Entity
 public class Product {
 
@@ -33,12 +36,15 @@ public class Product {
 
     @Getter
     @Setter
-    @Column(name = "order_number")
-    private String orderNumber;
+    @Column(name = "current_order_number")
+    private String currentOrderNumber;
 
     @Getter
     @Setter
-    @ManyToMany()
+    @ManyToMany
+    @JoinTable(name= "product_machine",
+                joinColumns = @JoinColumn(name = "product_id"),
+                inverseJoinColumns = @JoinColumn(name = "machine_id"))
     private Set<Machine> operations;
 
     @Getter
@@ -48,10 +54,15 @@ public class Product {
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "order")
+    @ManyToMany(mappedBy = "productNumber")
     private Set<Order> orders = new HashSet<>();
 
     public Product() {
     }
 
+    public Product(String drawingNumber, Duration operationTime, String currentOrderNumber ) {
+        this.drawingNumber = drawingNumber;
+        this.operationTime = operationTime;
+        this.currentOrderNumber = currentOrderNumber;
+    }
 }

@@ -23,4 +23,24 @@ public class ClientServiceImpl implements ClientService {
     public Client getClientById(long id) {
         return clientRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public void deleteClient(long id) {
+        clientRepository.deleteById(id);
+    }
+
+    @Override
+    public long createClient(Client client) {
+        Client newClient = clientRepository.save(client);
+        return newClient.getId();
+    }
+
+    @Override
+    public void updateClient(long id, Client client) {
+        Client existingClient = clientRepository.findById(id).orElse(null);
+        existingClient.setCompanyName(client.getCompanyName());
+        existingClient.setDebtorNumber(client.getDebtorNumber());
+        existingClient.setEmail(client.getEmail());
+        clientRepository.save(existingClient);
+    }
 }

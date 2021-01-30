@@ -30,20 +30,23 @@ public class Machine {
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "machine")
-    private Set<Employee> employees = new HashSet<>();
+    @ManyToMany(mappedBy = "machines")
+    private Set<Employee> employee= new HashSet<>();
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "drawing")
+    @ManyToMany(mappedBy = "operations")
     private Set<Product> products = new HashSet<>();
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "order")
+    @ManyToMany(mappedBy = "operations")
     private Set<Order> orders = new HashSet<>();
 
     public Machine() {
     }
 
+    public Machine(String machine) {
+        this.machine = machine;
+    }
 }

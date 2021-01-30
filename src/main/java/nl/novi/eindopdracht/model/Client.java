@@ -1,5 +1,9 @@
 package nl.novi.eindopdracht.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,61 +21,39 @@ import java.util.Set;
 @Table(name = "client")
 public class Client {
 
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Getter
+    @Setter
     @Column(name = "company_name")
     private String companyName;
 
+    @Getter
+    @Setter
     @Column(name = "email")
     private String email;
 
+    @Getter
+    @Setter
     @Column(name = "debtor_number")
     private long debtorNumber;
 
-    @ManyToMany
-    @JoinTable(name = "client_order", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
-    private Set<Order> orders = new HashSet<>();
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "client")
+    @JsonIgnore
+    private Set<Order> orders;
 
     public Client() {
     }
 
-    public Client( String companyName, String email, long debtorNumber) {
+    public Client(String companyName, String email, long debtorNumber) {
         this.companyName = companyName;
         this.email = email;
-        this.debtorNumber = debtorNumber;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public long getDebtorNumber() {
-        return debtorNumber;
-    }
-
-    public void setDebtorNumber(long debtorNumber) {
         this.debtorNumber = debtorNumber;
     }
 

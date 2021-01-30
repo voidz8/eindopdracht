@@ -1,6 +1,8 @@
 package nl.novi.eindopdracht.model;
 
 import com.sun.istack.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,32 +12,53 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-public abstract class Employee {
+@Table(name = "employee")
+@Entity
+public class Employee {
 
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Getter
+    @Setter
     @Column(name = "name")
     private String name;
 
+    @Getter
+    @Setter
     @NotNull
     @Column(name = "email")
     private String email;
 
+    @Getter
+    @Setter
     @NotNull
     @Column(name = "password")
     private String password;
 
+    @Getter
+    @Setter
     @ManyToMany
-    @JoinTable(name = "machine_employee",
+    @JoinTable(name = "employee_machine",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "machine_id"))
     private Set<Machine> machines = new HashSet<>();
+
+    @Getter
+    @Setter
+    @ManyToMany
+    @JoinTable(name = "employee_role",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
 
     public Employee() {
     }
@@ -48,46 +71,6 @@ public abstract class Employee {
     }
 
     public Employee(String name, String email, String password, Set<Machine> machines) {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Machine> getMachines() {
-        return machines;
-    }
-
-    public void setMachines(Set<Machine> machines) {
-        this.machines = machines;
     }
 
     @Override

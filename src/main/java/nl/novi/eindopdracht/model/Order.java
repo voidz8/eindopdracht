@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -28,8 +30,9 @@ public class Order {
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "client")
-    private Set<Client> client = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     @Getter
     @Setter
@@ -65,4 +68,9 @@ public class Order {
     public Order() {
     }
 
+    public Order(long orderNumber, LocalDate productionDate, LocalDate deliveryDate) {
+        this.orderNumber = orderNumber;
+        this.productionDate = productionDate;
+        this.deliveryDate = deliveryDate;
+    }
 }
