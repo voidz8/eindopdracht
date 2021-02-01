@@ -68,7 +68,8 @@ public class Order {
     public Order() {
     }
 
-    public Order(long orderNumber, LocalDate productionDate, LocalDate deliveryDate) {
+    public Order(Client client, long orderNumber, LocalDate productionDate, LocalDate deliveryDate) {
+        this.client = client;
         this.orderNumber = orderNumber;
         this.productionDate = productionDate;
         this.deliveryDate = deliveryDate;

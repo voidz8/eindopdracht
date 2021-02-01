@@ -1,1 +1,2 @@
 INSERT into client (company_name, email, debtor_number) VALUES ('Profplastic', 'info@profplastic.com', 1234)
+INSERT into order (client_id, ordernumber, production_date, delivery_date) VALUES (1, 2021000, '2021-02-15', '2021-03-15')
