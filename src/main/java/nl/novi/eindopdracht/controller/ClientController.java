@@ -1,6 +1,7 @@
 package nl.novi.eindopdracht.controller;
 
 import nl.novi.eindopdracht.model.Client;
+import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,5 +53,14 @@ public class ClientController {
         return new ResponseEntity<>("Client with clientid: " + id +"is updated", HttpStatus.OK);
     }
 
+    @GetMapping(value = "client/{id}/orders")
+    public ResponseEntity<Object> getAllOrders(@PathVariable("id") long id){
+    Client client = clientService.getClientById(id);
+    client.
 
+    return new ResponseEntity<>();
+    }
+
+    @PostMapping(value = "/client/{id}/orders")
+    public ResponseEntity<Object> addOrder(){}
 }

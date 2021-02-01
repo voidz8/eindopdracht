@@ -1,12 +1,15 @@
 package nl.novi.eindopdracht.service;
 
+import nl.novi.eindopdracht.exceptions.ClientNotFoundException;
 import nl.novi.eindopdracht.model.Client;
+import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -43,4 +46,36 @@ public class ClientServiceImpl implements ClientService {
         existingClient.setEmail(client.getEmail());
         clientRepository.save(existingClient);
     }
+
+    @Override
+    public Optional<Client> getClientByCompanyname(String companyName) {
+        return clientRepository.findByCompanyName(companyName);
+    }
+
+    @Override
+    public boolean clientExists(Long id) {
+        return clientRepository.existsById(id);
+    }
+
+    @Override
+    public boolean clientExistsByName(String companyName) {
+        return clientRepository.findByCompanyName(companyName).get() != null;
+    }
+
+    @Override
+    public Order getAllOrders(long id, Order orders) {
+        clientRepository.findById(id);
+        return orders;
+    }
+
+
+    @Override
+    public void addOrder(Long id, Set<Order> orders) {
+        if (!clientRepository.existsById(id)) {throw new ClientNotFoundException();}
+        Client client = clientRepository.findById(id).get();
+        client.setOrders(orders);
+        clientRepository.save(client);
+    }
+
+
 }
