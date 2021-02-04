@@ -21,26 +21,27 @@ import java.util.Set;
 @Table(name = "client")
 public class Client {
 
+    @Id
     @Getter
     @Setter
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "client_id")
     private long id;
 
     @Getter
     @Setter
-    @Column(name = "company_name")
+    @Column(name = "company_name", nullable = false, unique = true)
     private String companyName;
 
     @Getter
     @Setter
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Getter
     @Setter
-    @Column(name = "debtor_number")
-    private long debtorNumber;
+    @Column(name = "debtor_number", nullable = false)
+    private String debtorNumber;
 
     @Getter
     @Setter
@@ -51,7 +52,7 @@ public class Client {
     public Client() {
     }
 
-    public Client(String companyName, String email, long debtorNumber) {
+    public Client(String companyName, String email, String debtorNumber) {
         this.companyName = companyName;
         this.email = email;
         this.debtorNumber = debtorNumber;

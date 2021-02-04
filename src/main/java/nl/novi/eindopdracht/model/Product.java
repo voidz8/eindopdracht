@@ -23,27 +23,17 @@ import java.util.Set;
 @Entity
 public class Product {
 
-    @Getter
-    @Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
     @Getter
     @Setter
-    @Column(name = "drawing_number")
+    @Column(name = "drawing_number", nullable = false, unique = true)
     private String drawingNumber;
-
-    @Getter
-    @Setter
-    @Column(name = "current_order_number")
-    private String currentOrderNumber;
 
     @Getter
     @Setter
     @ManyToMany
     @JoinTable(name= "product_machine",
-                joinColumns = @JoinColumn(name = "product_id"),
+                joinColumns = @JoinColumn(name = "drawing_number"),
                 inverseJoinColumns = @JoinColumn(name = "machine_id"))
     private Set<Machine> operations;
 
@@ -54,15 +44,26 @@ public class Product {
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "productNumber")
+    @ManyToMany(mappedBy = "drawingNumber")
     private Set<Order> orders = new HashSet<>();
 
     public Product() {
     }
 
-    public Product(String drawingNumber, Duration operationTime, String currentOrderNumber ) {
+    public Product(String drawingNumber, Set<Machine> operations, Duration operationTime, Set<Order> orders) {
         this.drawingNumber = drawingNumber;
+        this.operations = operations;
         this.operationTime = operationTime;
-        this.currentOrderNumber = currentOrderNumber;
+        this.orders = orders;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                ", drawingNumber='" + drawingNumber + '\'' +
+                ", operations=" + operations +
+                ", operationTime=" + operationTime +
+                ", orders=" + orders +
+                '}';
     }
 }

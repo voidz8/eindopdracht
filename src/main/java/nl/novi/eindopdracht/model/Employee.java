@@ -20,34 +20,28 @@ import java.util.Set;
 @Entity
 public class Employee {
 
-    @Getter
-    @Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
     @Getter
     @Setter
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @Getter
     @Setter
-    @NotNull
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Getter
     @Setter
     @NotNull
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Getter
     @Setter
     @ManyToMany
     @JoinTable(name = "employee_machine",
-            joinColumns = @JoinColumn(name = "employee_id"),
+            joinColumns = @JoinColumn(name = "name"),
             inverseJoinColumns = @JoinColumn(name = "machine_id"))
     private Set<Machine> machines = new HashSet<>();
 
@@ -55,7 +49,7 @@ public class Employee {
     @Setter
     @ManyToMany
     @JoinTable(name = "employee_role",
-            joinColumns = @JoinColumn(name = "employee_id"),
+            joinColumns = @JoinColumn(name = "name"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
@@ -63,23 +57,21 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(long id, String name, String email, String password, Set<Machine> machines) {
+    public Employee(String name, String email, String password, Set<Machine> machines, Set<Role> roles) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.machines = machines;
-    }
-
-    public Employee(String name, String email, String password, Set<Machine> machines) {
+        this.roles = roles;
     }
 
     @Override
     public String toString() {
         return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", machines=" + machines +
+                ", roles=" + roles +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package nl.novi.eindopdracht.service;
 
 import nl.novi.eindopdracht.exceptions.ClientNotFoundException;
+import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.model.Client;
 import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.repository.ClientRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,8 +25,15 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client getClientById(long id) {
-        return clientRepository.findById(id).orElse(null);
+    public Optional<Client> getClientById(long id){
+        if(!clientRepository.existsById(id)) throw new ClientNotFoundException();
+        return clientRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Client> getClientByName(String companyName) {
+        if(!clientRepository.existsClientByCompanyName(companyName)) throw new ClientNotFoundException();
+        return clientRepository.findByCompanyName(companyName);
     }
 
     @Override
@@ -33,9 +42,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public long createClient(Client client) {
+    public String createClient(Client client) {
         Client newClient = clientRepository.save(client);
-        return newClient.getId();
+        return newClient.getCompanyName();
     }
 
     @Override
@@ -48,29 +57,45 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Optional<Client> getClientByCompanyname(String companyName) {
-        return clientRepository.findByCompanyName(companyName);
+    public void updateClientPartial(long id, Map<String, String> fields) {
+        if(!clientRepository.existsById(id)) {throw new ClientNotFoundException();}
+        Client storedClient = clientRepository.findById(id).orElse(null);
+        for(String field : fields.keySet()){
+            switch (field){
+                case "companyName":
+                    storedClient.setCompanyName((String) fields.get(field));
+                    break;
+                case "email":
+                    storedClient.setEmail((String) fields.get(field));
+                    break;
+                case "debtorNumber":
+                    storedClient.setDebtorNumber((String) fields.get(field));
+                    break;
+            }
+        }
+        clientRepository.save(storedClient);
     }
 
     @Override
-    public boolean clientExists(Long id) {
-        return clientRepository.existsById(id);
+    public boolean clientExistsById(long id) {
+        return clientRepository.findById(id).get() != null;
     }
 
     @Override
-    public boolean clientExistsByName(String companyName) {
+    public boolean clientExistsByName(String companyName){
         return clientRepository.findByCompanyName(companyName).get() != null;
     }
 
+
     @Override
-    public Order getAllOrders(long id, Order orders) {
-        clientRepository.findById(id);
+    public Order getAllOrders(String companyName, Order orders) {
+        clientRepository.findByCompanyName(companyName);
         return orders;
     }
 
 
     @Override
-    public void addOrder(Long id, Set<Order> orders) {
+    public void addOrder(long id, Set<Order> orders) {
         if (!clientRepository.existsById(id)) {throw new ClientNotFoundException();}
         Client client = clientRepository.findById(id).get();
         client.setOrders(orders);

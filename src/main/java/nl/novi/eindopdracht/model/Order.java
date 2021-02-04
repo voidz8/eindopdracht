@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -23,36 +22,32 @@ import java.util.Set;
 @Entity
 public class Order {
 
+    @Id
     @Getter
     @Setter
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "order_number", nullable = false, unique = true)
+    private long orderNumber;
 
     @Getter
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "name")
     private Client client;
 
-    @Getter
-    @Setter
-    @Column(name = "ordernumber")
-    private long orderNumber;
 
     @Getter
     @Setter
     @ManyToMany
     @JoinTable(name = "order_product",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Product> productNumber = new HashSet<>();
+            joinColumns = @JoinColumn(name = "order_number"),
+            inverseJoinColumns = @JoinColumn(name = "drawing_number"))
+    private Set<Product> drawingNumber = new HashSet<>();
 
     @Getter
     @Setter
     @ManyToMany
     @JoinTable(name = "order_machine",
-            joinColumns = @JoinColumn(name = "order_id"),
+            joinColumns = @JoinColumn(name = "order_number"),
             inverseJoinColumns = @JoinColumn(name = "machine_id"))
     private Set<Machine> operations = new HashSet<>();
 
@@ -74,5 +69,17 @@ public class Order {
         this.orderNumber = orderNumber;
         this.productionDate = productionDate;
         this.deliveryDate = deliveryDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderNumber=" + orderNumber +
+                ", client=" + client +
+                ", drawingNumber=" + drawingNumber +
+                ", operations=" + operations +
+                ", productionDate=" + productionDate +
+                ", deliveryDate=" + deliveryDate +
+                '}';
     }
 }

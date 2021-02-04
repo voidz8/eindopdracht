@@ -4,19 +4,22 @@ import nl.novi.eindopdracht.model.Client;
 import nl.novi.eindopdracht.model.Order;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 public interface ClientService {
 
     List<Client> getallClients();
-    Client getClientById(long id);
+    Optional<Client> getClientById(long id);
+    Optional<Client> getClientByName(String companyName);
     void deleteClient(long id);
-    long createClient(Client client);
+    String createClient(Client client);
     void updateClient(long id, Client client);
-    Optional<Client> getClientByCompanyname(String companyName);
-    boolean clientExists(Long id);
+    void updateClientPartial(long id, Map<String, String> fields);
+    boolean clientExistsById(long id);
     boolean clientExistsByName(String companyName);
-    Order getAllOrders(long id, Order orders);
-    void addOrder(Long id, Set<Order> orders);
+
+    Order getAllOrders(String companyName, Order orders);
+    void addOrder(long id, Set<Order> orders);
 }
