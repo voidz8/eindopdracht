@@ -3,6 +3,7 @@ package nl.novi.eindopdracht.service;
 import nl.novi.eindopdracht.model.Client;
 import nl.novi.eindopdracht.model.Order;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -19,7 +20,6 @@ public interface ClientService {
     void updateClientPartial(long id, Map<String, String> fields);
     boolean clientExistsById(long id);
     boolean clientExistsByName(String companyName);
-
-    Order getAllOrders(String companyName, Order orders);
+    Collection<Order> getAllOrders(long id);
     void addOrder(long id, Set<Order> orders);
 }

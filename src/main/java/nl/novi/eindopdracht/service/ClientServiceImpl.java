@@ -8,6 +8,7 @@ import nl.novi.eindopdracht.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,7 +27,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Optional<Client> getClientById(long id){
-        if(!clientRepository.existsById(id)) throw new ClientNotFoundException();
+        if(!clientRepository.existsById(id)) {throw new ClientNotFoundException();}
         return clientRepository.findById(id);
     }
 
@@ -88,9 +89,10 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
-    public Order getAllOrders(String companyName, Order orders) {
-        clientRepository.findByCompanyName(companyName);
-        return orders;
+    public Collection<Order> getAllOrders(long id) {
+        if(!clientRepository.existsById(id)){throw new ClientNotFoundException();}
+        Optional<Client> client = clientRepository.findById(id);
+        return client.get().getOrders();
     }
 
 

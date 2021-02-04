@@ -66,5 +66,11 @@ public class ClientController {
         clientService.updateClientPartial(id, fields);
         return new ResponseEntity<>("Client successfull updated" + fields, HttpStatus.OK);
     }
+    @GetMapping(value = "/clients/{id)/orders")
+    public ResponseEntity<Object> getAllOrders(@PathVariable("id") long id){
+        Collection<Order> orders = clientService.getAllOrders(id);
+        return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+
 
 }

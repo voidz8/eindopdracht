@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,9 +47,11 @@ public class Client {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "client")
-    @JsonIgnore
-    private Set<Order> orders;
+    @OneToMany(targetEntity = Order.class,
+            mappedBy = "client",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Set<Order> orders = new HashSet<>();
 
     public Client() {
     }

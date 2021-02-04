@@ -6,8 +6,6 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -18,7 +16,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-@Table(name = "order")
+@Table(name = "orders")
 @Entity
 public class Order {
 
@@ -30,8 +28,8 @@ public class Order {
 
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "name")
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
 
