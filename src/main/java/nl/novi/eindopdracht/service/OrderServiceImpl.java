@@ -38,13 +38,22 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public long createOrder(Order Order) {
-        return 0;
+    public long createOrder(long id, Order order) {
+        if(!orderRepository.existsById(id)) {throw new OrderNotFoundException();}
+        Order newOrder = orderRepository.save(order);
+        return newOrder.getOrderNumber();
     }
 
     @Override
     public void updateOrder(long id, Order order) {
-
+    if(!orderRepository.existsById(id)) {throw new OrderNotFoundException();}
+    Order existingOrder = orderRepository.findById(id).orElse(null);
+    existingOrder.setClient(order.getClient());
+    existingOrder.setOrderNumber(order.getOrderNumber());
+    existingOrder.setDeliveryDate(order.getDeliveryDate());
+    existingOrder.setOperations(order.getOperations());
+    existingOrder.setDrawingNumber(order.getDrawingNumber());
+    existingOrder.setProductionDate(order.getProductionDate());
     }
 
     @Override

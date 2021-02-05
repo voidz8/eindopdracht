@@ -3,6 +3,7 @@ package nl.novi.eindopdracht.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +30,7 @@ public class Order {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
+    @JoinColumn(name = "company_name", nullable = false)
     private Client client;
 
 

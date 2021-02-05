@@ -12,14 +12,12 @@ import java.util.Set;
 public interface ClientService {
 
     List<Client> getallClients();
-    Optional<Client> getClientById(long id);
     Optional<Client> getClientByName(String companyName);
-    void deleteClient(long id);
+    void deleteClient(String companyName);
     String createClient(Client client);
-    void updateClient(long id, Client client);
-    void updateClientPartial(long id, Map<String, String> fields);
-    boolean clientExistsById(long id);
+    void updateClient(String companyName, Client client);
+    void updateClientPartial(String companyName, Map<String, String> fields);
     boolean clientExistsByName(String companyName);
-    Collection<Order> getAllOrders(long id);
-    void addOrder(long id, Set<Order> orders);
+    Collection<Order> getAllOrders(String companyName);
+    void addOrder(String companyName, Set<Order> orders);
 }

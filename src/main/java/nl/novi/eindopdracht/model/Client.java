@@ -23,13 +23,14 @@ import java.util.Set;
 @Table(name = "client")
 public class Client {
 
-    @Id
+   /* @Id
     @Getter
     @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "client_id")
-    private long id;
+    private long id;*/
 
+    @Id
     @Getter
     @Setter
     @Column(name = "company_name", nullable = false, unique = true)
@@ -51,6 +52,7 @@ public class Client {
             mappedBy = "client",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
     public Client() {

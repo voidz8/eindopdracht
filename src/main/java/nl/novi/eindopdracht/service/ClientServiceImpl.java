@@ -25,11 +25,6 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.findAll();
     }
 
-    @Override
-    public Optional<Client> getClientById(long id){
-        if(!clientRepository.existsById(id)) {throw new ClientNotFoundException();}
-        return clientRepository.findById(id);
-    }
 
     @Override
     public Optional<Client> getClientByName(String companyName) {
@@ -38,8 +33,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void deleteClient(long id) {
-        clientRepository.deleteById(id);
+    public void deleteClient(String companyName) {
+        clientRepository.deleteClientByCompanyName(companyName);
     }
 
     @Override
@@ -49,23 +44,19 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void updateClient(long id, Client client) {
-        Client existingClient = clientRepository.findById(id).orElse(null);
-        existingClient.setCompanyName(client.getCompanyName());
+    public void updateClient(String companyName, Client client) {
+        Client existingClient = clientRepository.findByCompanyName(companyName).orElse(null);
         existingClient.setDebtorNumber(client.getDebtorNumber());
         existingClient.setEmail(client.getEmail());
         clientRepository.save(existingClient);
     }
 
     @Override
-    public void updateClientPartial(long id, Map<String, String> fields) {
-        if(!clientRepository.existsById(id)) {throw new ClientNotFoundException();}
-        Client storedClient = clientRepository.findById(id).orElse(null);
+    public void updateClientPartial(String companyName, Map<String, String> fields) {
+        if(!clientRepository.existsClientByCompanyName(companyName)) {throw new ClientNotFoundException();}
+        Client storedClient = clientRepository.findByCompanyName(companyName).orElse(null);
         for(String field : fields.keySet()){
             switch (field){
-                case "companyName":
-                    storedClient.setCompanyName((String) fields.get(field));
-                    break;
                 case "email":
                     storedClient.setEmail((String) fields.get(field));
                     break;
@@ -78,28 +69,23 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public boolean clientExistsById(long id) {
-        return clientRepository.findById(id).get() != null;
-    }
-
-    @Override
     public boolean clientExistsByName(String companyName){
         return clientRepository.findByCompanyName(companyName).get() != null;
     }
 
 
     @Override
-    public Collection<Order> getAllOrders(long id) {
-        if(!clientRepository.existsById(id)){throw new ClientNotFoundException();}
-        Optional<Client> client = clientRepository.findById(id);
+    public Collection<Order> getAllOrders(String companyName) {
+        if(!clientRepository.existsClientByCompanyName(companyName)){throw new ClientNotFoundException();}
+        Optional<Client> client = clientRepository.findByCompanyName(companyName);
         return client.get().getOrders();
     }
 
 
     @Override
-    public void addOrder(long id, Set<Order> orders) {
-        if (!clientRepository.existsById(id)) {throw new ClientNotFoundException();}
-        Client client = clientRepository.findById(id).get();
+    public void addOrder(String companyName, Set<Order> orders) {
+        if (!clientRepository.existsClientByCompanyName(companyName)) {throw new ClientNotFoundException();}
+        Client client = clientRepository.findByCompanyName(companyName).get();
         client.setOrders(orders);
         clientRepository.save(client);
     }

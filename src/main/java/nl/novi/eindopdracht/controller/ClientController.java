@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -33,19 +34,14 @@ public class ClientController {
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
-    /*@GetMapping(value = "/clients/{companyname}")
-    public ResponseEntity<Object> getClientByName(@PathVariable("company_name") String companyName){
+    @GetMapping(value = "/clients/{companyname}")
+    public ResponseEntity<Object> getClientByName(@RequestParam(value = "company_name", required = false) String companyName){
         return new ResponseEntity<>(clientService.getClientByName(companyName), HttpStatus.OK);
     }
-*/
-    @GetMapping(value = "/clients/{id}")
-    public ResponseEntity<Object> getClientById(@PathVariable("id") long id){
-        return new ResponseEntity<>(clientService.getClientById(id), HttpStatus.OK);
-    }
 
-    @DeleteMapping(value = "clients/{id}")
-    public ResponseEntity<Object> deleteClientById(@PathVariable("id") long id){
-        clientService.deleteClient(id);
+    @DeleteMapping(value = "clients/{companyname}")
+    public ResponseEntity<Object> deleteClient(@RequestParam(value = "company_name",required = false) String companyname){
+        clientService.deleteClient(companyname);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
@@ -55,20 +51,20 @@ public class ClientController {
         return new ResponseEntity<>("A new client is created: "+ newName, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/clients/{id}")
-    public ResponseEntity<Object> updateClient(@PathVariable("id") long id, @RequestBody Client client){
-        clientService.updateClient(id, client);
-        return new ResponseEntity<>("Client with clientid: " + id +"is updated", HttpStatus.OK);
+    @PutMapping(value = "/clients/{companyname}")
+    public ResponseEntity<Object> updateClient(@RequestParam(value = "company_name", required = false) String companyName, @RequestBody Client client){
+        clientService.updateClient(companyName, client);
+        return new ResponseEntity<>("Client with clientid: " + companyName+" is updated", HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/clients/{id}")
-    public ResponseEntity<Object> updateClientPartial(@PathVariable("id") long id, @RequestBody Map<String, String> fields){
-        clientService.updateClientPartial(id, fields);
-        return new ResponseEntity<>("Client successfull updated" + fields, HttpStatus.OK);
+    @PatchMapping(value = "/clients/{companyname}")
+    public ResponseEntity<Object> updateClientPartial(@RequestParam(value = "company_name",required = false) String companyName, @RequestBody Map<String, String> fields){
+        clientService.updateClientPartial(companyName, fields);
+        return new ResponseEntity<>("Client " +companyName +" successfull updated" + fields, HttpStatus.OK);
     }
     @GetMapping(value = "/clients/{id)/orders")
-    public ResponseEntity<Object> getAllOrders(@PathVariable("id") long id){
-        Collection<Order> orders = clientService.getAllOrders(id);
+    public ResponseEntity<Object> getAllOrders(@RequestParam(value = "company_name", required = false) String companyName){
+        Collection<Order> orders = clientService.getAllOrders(companyName);
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
