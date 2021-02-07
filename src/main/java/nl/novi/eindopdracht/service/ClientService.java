@@ -20,4 +20,5 @@ public interface ClientService {
     boolean clientExistsByName(String companyName);
     Collection<Order> getAllOrders(String companyName);
     void addOrder(String companyName, Set<Order> orders);
+
 }

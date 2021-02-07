@@ -23,13 +23,6 @@ import java.util.Set;
 @Table(name = "client")
 public class Client {
 
-   /* @Id
-    @Getter
-    @Setter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "client_id")
-    private long id;*/
-
     @Id
     @Getter
     @Setter
@@ -51,7 +44,7 @@ public class Client {
     @OneToMany(targetEntity = Order.class,
             mappedBy = "client",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+            fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 

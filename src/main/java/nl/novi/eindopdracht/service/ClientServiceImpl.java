@@ -1,7 +1,6 @@
 package nl.novi.eindopdracht.service;
 
 import nl.novi.eindopdracht.exceptions.ClientNotFoundException;
-import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.model.Client;
 import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.repository.ClientRepository;
@@ -28,12 +27,13 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Optional<Client> getClientByName(String companyName) {
-        if(!clientRepository.existsClientByCompanyName(companyName)) throw new ClientNotFoundException();
+        if(!clientRepository.existsClientByCompanyName(companyName)) {throw new ClientNotFoundException();}
         return clientRepository.findByCompanyName(companyName);
     }
 
     @Override
     public void deleteClient(String companyName) {
+        if(!clientRepository.existsClientByCompanyName(companyName)){throw new ClientNotFoundException();}
         clientRepository.deleteClientByCompanyName(companyName);
     }
 
@@ -53,7 +53,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void updateClientPartial(String companyName, Map<String, String> fields) {
-        if(!clientRepository.existsClientByCompanyName(companyName)) {throw new ClientNotFoundException();}
+        if(clientRepository.existsClientByCompanyName(companyName)) {throw new ClientNotFoundException();}
         Client storedClient = clientRepository.findByCompanyName(companyName).orElse(null);
         for(String field : fields.keySet()){
             switch (field){
@@ -76,7 +76,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Collection<Order> getAllOrders(String companyName) {
-        if(!clientRepository.existsClientByCompanyName(companyName)){throw new ClientNotFoundException();}
+        if(clientRepository.existsClientByCompanyName(companyName)){throw new ClientNotFoundException();}
         Optional<Client> client = clientRepository.findByCompanyName(companyName);
         return client.get().getOrders();
     }
@@ -84,7 +84,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void addOrder(String companyName, Set<Order> orders) {
-        if (!clientRepository.existsClientByCompanyName(companyName)) {throw new ClientNotFoundException();}
+        if (clientRepository.existsClientByCompanyName(companyName)) {throw new ClientNotFoundException();}
         Client client = clientRepository.findByCompanyName(companyName).get();
         client.setOrders(orders);
         clientRepository.save(client);

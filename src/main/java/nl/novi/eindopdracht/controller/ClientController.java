@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,14 +35,14 @@ public class ClientController {
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/clients/{companyname}")
-    public ResponseEntity<Object> getClientByName(@RequestParam(value = "company_name", required = false) String companyName){
+    @GetMapping(value = "/clients/{companyName}")
+    public ResponseEntity<Object> getClientByName(@PathVariable(value = "companyName") String companyName){
         return new ResponseEntity<>(clientService.getClientByName(companyName), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "clients/{companyname}")
-    public ResponseEntity<Object> deleteClient(@RequestParam(value = "company_name",required = false) String companyname){
-        clientService.deleteClient(companyname);
+    @DeleteMapping(value = "clients/{companyName}")
+    public ResponseEntity<Object> deleteClient(@PathVariable(value = "companyName") String companyName){
+        clientService.deleteClient(companyName);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
@@ -52,7 +53,7 @@ public class ClientController {
     }
 
     @PutMapping(value = "/clients/{companyname}")
-    public ResponseEntity<Object> updateClient(@RequestParam(value = "company_name", required = false) String companyName, @RequestBody Client client){
+    public ResponseEntity<Object> updateClient(@RequestParam(value = "company_name") String companyName, @RequestBody Client client){
         clientService.updateClient(companyName, client);
         return new ResponseEntity<>("Client with clientid: " + companyName+" is updated", HttpStatus.OK);
     }

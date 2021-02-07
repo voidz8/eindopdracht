@@ -38,8 +38,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public long createOrder(long id, Order order) {
-        if(!orderRepository.existsById(id)) {throw new OrderNotFoundException();}
+    public long createOrder(Order order) {
         Order newOrder = orderRepository.save(order);
         return newOrder.getOrderNumber();
     }
@@ -57,13 +56,25 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public void updateOrderPartial(long id, Client client, Product product, Machine machine, LocalDate productionDate, LocalDate deliveryDate) {
-
+    public void updateOrderPartial(long id, Client client, Product product, Machine machine, LocalDate productionDate, LocalDate deliveryDate, Order order) {
+    if(!orderRepository.existsById(id)) {throw new OrderNotFoundException();}
+    Order existingOrder = orderRepository.findById(id).orElse(null);
+    if(existingOrder.getClient() != null){
+        existingOrder.setClient(order.getClient());}
+    if(existingOrder.getOperations() !=null){
+        existingOrder.setOperations(order.getOperations());}
+    if(existingOrder.getDeliveryDate() != null){
+        existingOrder.setDeliveryDate(order.getDeliveryDate());}
+    if(existingOrder.getDrawingNumber() != null){
+        existingOrder.setDrawingNumber(order.getDrawingNumber());}
+    if(existingOrder.getProductionDate() != null){
+        existingOrder.setProductionDate(order.getProductionDate()); }
+    orderRepository.save(existingOrder);
     }
 
     @Override
     public boolean orderExists(long id) {
-        return false;
+        return orderRepository.existsById(id);
     }
 
 }

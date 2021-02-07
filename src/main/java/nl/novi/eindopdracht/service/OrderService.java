@@ -17,9 +17,9 @@ public interface OrderService {
     Collection<Order> getAllOrders();
     Optional<Order> getOrderByOrderNumber(long id);
     void deleteOrder(long id);
-    long createOrder(long id, Order Order);
+    long createOrder(Order Order);
     void updateOrder(long id, Order order);
-    void updateOrderPartial(long id, Client client, Product product, Machine machine, LocalDate productionDate, LocalDate deliveryDate);
+    void updateOrderPartial(long id, Client client, Product product, Machine machine, LocalDate productionDate, LocalDate deliveryDate, Order order);
     boolean orderExists(long id);
 
 }
