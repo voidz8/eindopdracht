@@ -16,12 +16,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "client")
-public class Client {
+public class Client implements Serializable {
 
     @Id
     @Getter
@@ -37,21 +38,18 @@ public class Client {
     @Getter
     @Setter
     @Column(name = "debtor_number", nullable = false)
-    private String debtorNumber;
+    private Long debtorNumber;
 
     @Getter
     @Setter
-    @OneToMany(targetEntity = Order.class,
-            mappedBy = "client",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval = true, mappedBy = "client")
     @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
     public Client() {
     }
 
-    public Client(String companyName, String email, String debtorNumber) {
+    public Client(String companyName, String email, Long debtorNumber) {
         this.companyName = companyName;
         this.email = email;
         this.debtorNumber = debtorNumber;

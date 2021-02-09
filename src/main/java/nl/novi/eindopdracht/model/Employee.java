@@ -23,7 +23,7 @@ public class Employee {
     @Id
     @Getter
     @Setter
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "fullName", nullable = false, unique = true)
     private String name;
 
     @Getter

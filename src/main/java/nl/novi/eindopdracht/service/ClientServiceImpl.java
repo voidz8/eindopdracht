@@ -1,5 +1,6 @@
 package nl.novi.eindopdracht.service;
 
+import nl.novi.eindopdracht.exceptions.ClientAlreadyExists;
 import nl.novi.eindopdracht.exceptions.ClientNotFoundException;
 import nl.novi.eindopdracht.model.Client;
 import nl.novi.eindopdracht.model.Order;
@@ -34,12 +35,13 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void deleteClient(String companyName) {
         if(!clientRepository.existsClientByCompanyName(companyName)){throw new ClientNotFoundException();}
-        clientRepository.deleteClientByCompanyName(companyName);
+        clientRepository.deleteById(companyName);
     }
 
     @Override
     public String createClient(Client client) {
         Client newClient = clientRepository.save(client);
+        if(clientRepository.existsClientByCompanyName(newClient.getCompanyName())){throw new ClientAlreadyExists();}
         return newClient.getCompanyName();
     }
 
@@ -52,19 +54,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void updateClientPartial(String companyName, Map<String, String> fields) {
+    public void updateClientPartial(String companyName,String email, Long debtorNumber, Client client) {
         if(clientRepository.existsClientByCompanyName(companyName)) {throw new ClientNotFoundException();}
         Client storedClient = clientRepository.findByCompanyName(companyName).orElse(null);
-        for(String field : fields.keySet()){
-            switch (field){
-                case "email":
-                    storedClient.setEmail((String) fields.get(field));
-                    break;
-                case "debtorNumber":
-                    storedClient.setDebtorNumber((String) fields.get(field));
-                    break;
-            }
-        }
+        if (storedClient.getCompanyName() != null) {storedClient.setCompanyName(client.getCompanyName());}
+        if (storedClient.getEmail() !=null){storedClient.setEmail(client.getEmail());}
+        if (storedClient.getDebtorNumber() !=null){storedClient.setDebtorNumber(client.getDebtorNumber());}
         clientRepository.save(storedClient);
     }
 

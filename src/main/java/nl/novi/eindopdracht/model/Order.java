@@ -1,5 +1,6 @@
 package nl.novi.eindopdracht.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,13 +14,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @Table(name = "orders")
 @Entity
-public class Order {
+public class Order implements Serializable {
 
     @Id
     @Getter
@@ -29,7 +31,8 @@ public class Order {
 
     @Getter
     @Setter
-    @ManyToOne
+    @JsonDeserialize
+    @ManyToOne(optional = false)
     @JoinColumn(name = "company_name", nullable = false)
     private Client client;
 

@@ -22,6 +22,7 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class ClientController {
@@ -53,21 +54,25 @@ public class ClientController {
     }
 
     @PutMapping(value = "/clients/{companyname}")
-    public ResponseEntity<Object> updateClient(@RequestParam(value = "company_name") String companyName, @RequestBody Client client){
+    public ResponseEntity<Object> updateClient(@RequestParam(value = "companyName") String companyName, @RequestBody Client client){
         clientService.updateClient(companyName, client);
         return new ResponseEntity<>("Client with clientid: " + companyName+" is updated", HttpStatus.OK);
     }
 
     @PatchMapping(value = "/clients/{companyname}")
-    public ResponseEntity<Object> updateClientPartial(@RequestParam(value = "company_name",required = false) String companyName, @RequestBody Map<String, String> fields){
-        clientService.updateClientPartial(companyName, fields);
-        return new ResponseEntity<>("Client " +companyName +" successfull updated" + fields, HttpStatus.OK);
+    public ResponseEntity<Object> updateClientPartial(@RequestParam(value = "companyName",required = false) String companyName, String email, Long debtorNumber, @RequestBody Client client){
+        clientService.updateClientPartial(companyName, email, debtorNumber,client);
+        return new ResponseEntity<>("Client " +companyName +" is updated." , HttpStatus.OK);
     }
-    @GetMapping(value = "/clients/{id)/orders")
-    public ResponseEntity<Object> getAllOrders(@RequestParam(value = "company_name", required = false) String companyName){
+    @GetMapping(value = "/clients/{companyname)/orders")
+    public ResponseEntity<Object> getAllOrders(@RequestParam(value = "companyName", required = false) String companyName){
         Collection<Order> orders = clientService.getAllOrders(companyName);
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
-
+    @PostMapping(value = "/clients/{companyname}")
+    public ResponseEntity<Object> addOrder(@RequestParam(value = "companyName") String companyname, Set<Order> orders){
+        clientService.addOrder(companyname, orders);
+        return new ResponseEntity<>("Successfully added"+orders+ "to " +companyname+ "." , HttpStatus.OK);
+    }
 }

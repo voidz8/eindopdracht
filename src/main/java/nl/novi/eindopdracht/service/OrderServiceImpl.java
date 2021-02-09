@@ -53,6 +53,7 @@ public class OrderServiceImpl implements OrderService{
     existingOrder.setOperations(order.getOperations());
     existingOrder.setDrawingNumber(order.getDrawingNumber());
     existingOrder.setProductionDate(order.getProductionDate());
+    orderRepository.save(existingOrder);
     }
 
     @Override
