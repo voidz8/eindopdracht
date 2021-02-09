@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,8 +27,9 @@ public class Machine {
 
     @Getter
     @Setter
+    @Enumerated(EnumType.STRING)
     @Column(name = "machine")
-    private String machine;
+    private EMachine machine;
 
     @Getter
     @Setter
@@ -46,7 +49,7 @@ public class Machine {
     public Machine() {
     }
 
-    public Machine(String machine) {
+    public Machine(EMachine machine) {
         this.machine = machine;
     }
 }
