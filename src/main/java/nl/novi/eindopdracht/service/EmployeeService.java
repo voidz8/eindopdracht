@@ -2,6 +2,7 @@ package nl.novi.eindopdracht.service;
 
 import nl.novi.eindopdracht.model.Employee;
 import nl.novi.eindopdracht.model.Machine;
+import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.model.Role;
 
 import java.util.Collection;
@@ -16,4 +17,6 @@ public interface EmployeeService {
     void deleteEmployee(String name);
     void updateEmployee(String name, Employee employee);
     void partialUpdateEmployee(String name, String email, String password, Machine machine, Role roles, Employee employee);
+    Collection<Role> getRoles(String name);
+    void addRole(String name, Set<Role> roles);
 }

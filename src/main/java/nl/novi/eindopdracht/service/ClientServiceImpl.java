@@ -47,6 +47,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void updateClient(String companyName, Client client) {
+        if (!clientRepository.existsClientByCompanyName(companyName)){throw new ClientNotFoundException();}
         Client existingClient = clientRepository.findByCompanyName(companyName).orElse(null);
         existingClient.setDebtorNumber(client.getDebtorNumber());
         existingClient.setEmail(client.getEmail());

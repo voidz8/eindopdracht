@@ -69,6 +69,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Collection<Role> getRoles(String name) {
+        if(!employeeRepository.existsByName(name)){throw new EmployeeNotFoundException();}
+        Optional<Employee> employee = employeeRepository.findByName(name);
+        return employee.get().getRoles();
+    }
+
+    @Override
+    public void addRole(String name, Set<Role> roles) {
+        if (!employeeRepository.existsByName(name)){throw new EmployeeNotFoundException();}
+        Employee employee = employeeRepository.findByName(name).get();
+        employee.setRoles(roles);
+        employeeRepository.save(employee);
+    }
+
+    @Override
     public boolean employeeExists(String name) {
         return employeeRepository.existsById(name);
     }

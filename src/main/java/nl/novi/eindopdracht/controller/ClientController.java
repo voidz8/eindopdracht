@@ -49,29 +49,29 @@ public class ClientController {
 
     @PostMapping(value = "/clients")
     public ResponseEntity<Object> createClient(@RequestBody Client client){
-        String newName = clientService.createClient(client);
-        return new ResponseEntity<>("A new client is created: "+ newName, HttpStatus.CREATED);
+        String newClient = clientService.createClient(client);
+        return new ResponseEntity<>("A new client is created: "+ newClient, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/clients/{companyname}")
-    public ResponseEntity<Object> updateClient(@RequestParam(value = "companyName") String companyName, @RequestBody Client client){
+    @PutMapping(value = "/clients/{companyName}")
+    public ResponseEntity<Object> updateClient(@PathVariable(value = "companyName") String companyName, @RequestBody Client client){
         clientService.updateClient(companyName, client);
-        return new ResponseEntity<>("Client with clientid: " + companyName+" is updated", HttpStatus.OK);
+        return new ResponseEntity<>("Client: " + companyName+" is updated.", HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/clients/{companyname}")
-    public ResponseEntity<Object> updateClientPartial(@RequestParam(value = "companyName",required = false) String companyName, String email, Long debtorNumber, @RequestBody Client client){
+    @PatchMapping(value = "/clients/{companyName}")
+    public ResponseEntity<Object> updateClientPartial(@PathVariable(value = "companyName") String companyName, String email, Long debtorNumber, @RequestBody Client client){
         clientService.updateClientPartial(companyName, email, debtorNumber,client);
         return new ResponseEntity<>("Client " +companyName +" is updated." , HttpStatus.OK);
     }
-    @GetMapping(value = "/clients/{companyname)/orders")
-    public ResponseEntity<Object> getAllOrders(@RequestParam(value = "companyName", required = false) String companyName){
+    @GetMapping(value = "/clients/{companyName)/orders")
+    public ResponseEntity<Object> getAllOrders(@PathVariable(value = "companyName") String companyName){
         Collection<Order> orders = clientService.getAllOrders(companyName);
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
     @PostMapping(value = "/clients/{companyname}")
-    public ResponseEntity<Object> addOrder(@RequestParam(value = "companyName") String companyname, Set<Order> orders){
+    public ResponseEntity<Object> addOrder(@PathVariable(value = "companyName") String companyname, Set<Order> orders){
         clientService.addOrder(companyname, orders);
         return new ResponseEntity<>("Successfully added"+orders+ "to " +companyname+ "." , HttpStatus.OK);
     }
