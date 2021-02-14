@@ -65,14 +65,14 @@ public class ClientController {
         return new ResponseEntity<>("Client " +companyName +" is updated." , HttpStatus.OK);
     }
     @GetMapping(value = "/clients/{companyName)/orders")
-    public ResponseEntity<Object> getAllOrders(@PathVariable(value = "companyName") String companyName){
+    public ResponseEntity<Object> getAllOrders(@RequestParam(value = "companyName") String companyName){
         Collection<Order> orders = clientService.getAllOrders(companyName);
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/clients/{companyname}")
-    public ResponseEntity<Object> addOrder(@PathVariable(value = "companyName") String companyname, Set<Order> orders){
-        clientService.addOrder(companyname, orders);
-        return new ResponseEntity<>("Successfully added"+orders+ "to " +companyname+ "." , HttpStatus.OK);
+    @PostMapping(value = "/clients/{companyName}")
+    public ResponseEntity<Object> addOrder(@PathVariable(value = "companyName") String companyName, Set<Order> orders){
+        clientService.addOrder(companyName, orders);
+        return new ResponseEntity<>("Successfully added "+orders+ " to " +companyName+ "." , HttpStatus.OK);
     }
 }

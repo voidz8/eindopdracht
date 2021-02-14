@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService{
     existingOrder.setOrderNumber(order.getOrderNumber());
     existingOrder.setDeliveryDate(order.getDeliveryDate());
     existingOrder.setOperations(order.getOperations());
-    existingOrder.setDrawingNumber(order.getDrawingNumber());
+    existingOrder.setProducts(order.getProducts());
     existingOrder.setProductionDate(order.getProductionDate());
     orderRepository.save(existingOrder);
     }
@@ -66,8 +66,8 @@ public class OrderServiceImpl implements OrderService{
         existingOrder.setOperations(order.getOperations());}
     if(existingOrder.getDeliveryDate() != null){
         existingOrder.setDeliveryDate(order.getDeliveryDate());}
-    if(existingOrder.getDrawingNumber() != null){
-        existingOrder.setDrawingNumber(order.getDrawingNumber());}
+    if(existingOrder.getProducts() != null){
+        existingOrder.setProducts(order.getProducts());}
     if(existingOrder.getProductionDate() != null){
         existingOrder.setProductionDate(order.getProductionDate()); }
     orderRepository.save(existingOrder);
@@ -77,5 +77,21 @@ public class OrderServiceImpl implements OrderService{
     public boolean orderExists(long id) {
         return orderRepository.existsById(id);
     }
+
+    @Override
+    public Collection<Product> getProducts(long id) {
+        if (!orderRepository.existsById(id)){throw new OrderNotFoundException();}
+        Optional<Order> order = orderRepository.findById(id);
+        return order.get().getProducts();
+    }
+
+    @Override
+    public void addProductToOrder(long id, Set<Product> products) {
+        if (!orderRepository.existsById(id)){throw new OrderNotFoundException();}
+        Order order = orderRepository.findById(id).get();
+        order.setProducts(products);
+        orderRepository.save(order);
+    }
+
 
 }

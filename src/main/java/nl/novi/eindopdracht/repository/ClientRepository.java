@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface ClientRepository extends JpaRepository<Client, String> {
     Optional<Client> findByCompanyName(String companyName);
     boolean existsClientByCompanyName(String companyName);
-    void deleteClientByCompanyName(String companyName);
+
 }

@@ -1,6 +1,5 @@
 package nl.novi.eindopdracht.service;
 
-import nl.novi.eindopdracht.exceptions.ProductAlreadyExists;
 import nl.novi.eindopdracht.exceptions.ProductNotFoundException;
 import nl.novi.eindopdracht.model.Machine;
 import nl.novi.eindopdracht.model.Order;
@@ -32,13 +31,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public String createProduct(Product product) {
         Product newProduct = productRepository.save(product);
-        if (productRepository.existsByDrawingNumber(newProduct.getDrawingNumber())){throw new ProductAlreadyExists();}
         return newProduct.getDrawingNumber();
     }
 
     @Override
     public void deleteProduct(String drawingNumber) {
-    productRepository.deleteByDrawingNumber(drawingNumber);
+    productRepository.deleteById(drawingNumber);
     }
 
     @Override

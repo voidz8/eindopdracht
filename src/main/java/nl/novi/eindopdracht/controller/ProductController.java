@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
@@ -36,7 +37,7 @@ public class ProductController {
     @PostMapping(value = "/products")
     public ResponseEntity<Object> createProduct(@RequestBody Product product){
         String newProduct = productService.createProduct(product);
-        return new ResponseEntity<>("Product with drawingnumber: "+newProduct+ "is created.", HttpStatus.CREATED);
+        return new ResponseEntity<>("Product with drawingnumber: "+newProduct+ " is created.", HttpStatus.CREATED);
     }
     @PutMapping(value = "/products/{drawingNumber}")
     public ResponseEntity<Object> updateProduct(@PathVariable(value = "drawingNumber") String drawingNumber, @RequestBody Product product){

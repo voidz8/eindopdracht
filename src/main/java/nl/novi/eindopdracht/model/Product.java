@@ -44,7 +44,7 @@ public class Product {
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "drawingNumber")
+    @ManyToMany(mappedBy = "products")
     private Set<Order> orders = new HashSet<>();
 
     public Product() {

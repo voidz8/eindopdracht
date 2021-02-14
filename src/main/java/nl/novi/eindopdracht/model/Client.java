@@ -49,6 +49,10 @@ public class Client implements Serializable {
     public Client() {
     }
 
+    public Client(Set<Order> orders) {
+        this.orders = orders;
+    }
+
     public Client(String companyName, String email, Long debtorNumber) {
         this.companyName = companyName;
         this.email = email;

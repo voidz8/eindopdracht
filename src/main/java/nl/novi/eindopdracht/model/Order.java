@@ -32,10 +32,9 @@ public class Order implements Serializable {
     @Getter
     @Setter
     @JsonDeserialize
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "company_name", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "company_name")
     private Client client;
-
 
     @Getter
     @Setter
@@ -43,7 +42,7 @@ public class Order implements Serializable {
     @JoinTable(name = "order_product",
             joinColumns = @JoinColumn(name = "order_number"),
             inverseJoinColumns = @JoinColumn(name = "drawing_number"))
-    private Set<Product> drawingNumber = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 
     @Getter
     @Setter
@@ -84,7 +83,7 @@ public class Order implements Serializable {
         return "Order{" +
                 "orderNumber=" + orderNumber +
                 ", client=" + client +
-                ", drawingNumber=" + drawingNumber +
+                ", products=" + products +
                 ", operations=" + operations +
                 ", productionDate=" + productionDate +
                 ", deliveryDate=" + deliveryDate +

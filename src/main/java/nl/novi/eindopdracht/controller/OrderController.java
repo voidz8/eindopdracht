@@ -53,7 +53,7 @@ public class OrderController {
     }
 
     @PutMapping(value = "/orders/{id}")
-    public ResponseEntity<Object> updateOrder(@RequestParam(value = "id") long id, @RequestBody Order order){
+    public ResponseEntity<Object> updateOrder(@PathVariable(value = "id") long id, @RequestBody Order order){
         orderService.updateOrder(id, order);
         return new ResponseEntity<>("Order with ordernumber: "+ id + " is updated.", HttpStatus.OK);
     }
@@ -62,6 +62,16 @@ public class OrderController {
     public ResponseEntity<Object> updateOrderPartial(@PathVariable(value = "id") long id, Client client, Product product, Machine machine, LocalDate productionDate, LocalDate deliveryDate, @RequestBody Order order){
         orderService.updateOrderPartial(id,client, product, machine, productionDate, deliveryDate, order);
         return new ResponseEntity<>("Order with ordernumber"+ id +" is updated.", HttpStatus.OK);
+    }
+    @GetMapping(value = "/orders/{id}/products")
+    public ResponseEntity<Object> getProducts(@RequestParam(value = "id") long id){
+        Collection<Product> products = orderService.getProducts(id);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+    @PostMapping(value = "/orders/{id}")
+    public ResponseEntity<Object> addProducts(@RequestParam(value = "id") long id, Set<Product> products){
+        orderService.addProductToOrder(id,products);
+        return new ResponseEntity<>("Successfully added "+ products + " to "+ id, HttpStatus.OK);
     }
 
 }
