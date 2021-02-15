@@ -86,12 +86,10 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public void addProductToOrder(long id, Set<Product> products) {
+    public void addProductToOrder(long id, Product product) {
         if (!orderRepository.existsById(id)){throw new OrderNotFoundException();}
         Order order = orderRepository.findById(id).get();
-        order.setProducts(products);
+        order.addProduct(product);
         orderRepository.save(order);
     }
-
-
 }

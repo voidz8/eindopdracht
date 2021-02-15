@@ -22,6 +22,6 @@ public interface OrderService {
     void updateOrderPartial(long id, Client client, Product product, Machine machine, LocalDate productionDate, LocalDate deliveryDate, Order order);
     boolean orderExists(long id);
     Collection<Product> getProducts(long id);
-    void addProductToOrder(long id, Set<Product> products);
+    void addProductToOrder(long id, Product product);
 
 }

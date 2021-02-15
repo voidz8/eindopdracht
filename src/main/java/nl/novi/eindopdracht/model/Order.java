@@ -46,7 +46,7 @@ public class Order implements Serializable {
 
     @Getter
     @Setter
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "order_machine",
             joinColumns = @JoinColumn(name = "order_number"),
             inverseJoinColumns = @JoinColumn(name = "machine_id"))
@@ -61,6 +61,8 @@ public class Order implements Serializable {
     @Setter
     @Column(name = "delivery_date")
     private LocalDate deliveryDate;
+
+    public void addProduct(Product product){this.products.add(product);}
 
     public Order() {
     }

@@ -55,11 +55,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void updateClientPartial(String companyName,String email, Long debtorNumber, Client client) {
+    public void updateClientPartial(String companyName,String email, Long debtorNumber, Set<Order> orders, Client client) {
         if(!clientRepository.existsClientByCompanyName(companyName)) {throw new ClientNotFoundException();}
         Client storedClient = clientRepository.findByCompanyName(companyName).orElse(null);
         if (storedClient.getEmail() !=null){storedClient.setEmail(client.getEmail());}
         if (storedClient.getDebtorNumber() !=null){storedClient.setDebtorNumber(client.getDebtorNumber());}
+        if (storedClient.getOrders() != null) {storedClient.setOrders(client.getOrders());}
         clientRepository.save(storedClient);
     }
 
@@ -75,15 +76,4 @@ public class ClientServiceImpl implements ClientService {
         Optional<Client> client = clientRepository.findByCompanyName(companyName);
         return client.get().getOrders();
     }
-
-
-    @Override
-    public void addOrder(String companyName, Set<Order> orders) {
-        if (!clientRepository.existsClientByCompanyName(companyName)) {throw new ClientNotFoundException();}
-        Client client = clientRepository.findByCompanyName(companyName).orElse(null);
-        client.setOrders(orders);
-        clientRepository.save(client);
-    }
-
-
 }

@@ -46,6 +46,8 @@ public class Machine {
     @ManyToMany(mappedBy = "operations")
     private Set<Order> orders = new HashSet<>();
 
+    public void addEmployee(){}
+
     public Machine() {
     }
 

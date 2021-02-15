@@ -1,11 +1,14 @@
 package nl.novi.eindopdracht.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.aspectj.weaver.ast.Or;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,8 +47,13 @@ public class Product {
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "products")
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "products")
     private Set<Order> orders = new HashSet<>();
+
+    public Product(String drawingNumber) {
+        this.drawingNumber = drawingNumber;
+    }
 
     public Product() {
     }

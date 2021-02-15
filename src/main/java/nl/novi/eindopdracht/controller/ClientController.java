@@ -3,6 +3,7 @@ package nl.novi.eindopdracht.controller;
 import nl.novi.eindopdracht.model.Client;
 import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.service.ClientService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,8 +61,8 @@ public class ClientController {
     }
 
     @PatchMapping(value = "/clients/{companyName}")
-    public ResponseEntity<Object> updateClientPartial(@PathVariable(value = "companyName") String companyName, String email, Long debtorNumber, @RequestBody Client client){
-        clientService.updateClientPartial(companyName, email, debtorNumber,client);
+    public ResponseEntity<Object> updateClientPartial(@PathVariable(value = "companyName") String companyName, String email, Long debtorNumber, Set<Order> orders, @RequestBody Client client){
+        clientService.updateClientPartial(companyName, email, debtorNumber,orders,client);
         return new ResponseEntity<>("Client " +companyName +" is updated." , HttpStatus.OK);
     }
     @GetMapping(value = "/clients/{companyName)/orders")
@@ -70,9 +71,4 @@ public class ClientController {
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/clients/{companyName}")
-    public ResponseEntity<Object> addOrder(@PathVariable(value = "companyName") String companyName, Set<Order> orders){
-        clientService.addOrder(companyName, orders);
-        return new ResponseEntity<>("Successfully added "+orders+ " to " +companyName+ "." , HttpStatus.OK);
-    }
 }

@@ -1,5 +1,6 @@
 package nl.novi.eindopdracht.controller;
 
+import nl.novi.eindopdracht.exceptions.BadRequestException;
 import nl.novi.eindopdracht.model.Client;
 import nl.novi.eindopdracht.model.Machine;
 import nl.novi.eindopdracht.model.Order;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.lang.annotation.Repeatable;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -68,10 +70,10 @@ public class OrderController {
         Collection<Product> products = orderService.getProducts(id);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
-    @PostMapping(value = "/orders/{id}")
-    public ResponseEntity<Object> addProducts(@RequestParam(value = "id") long id, Set<Product> products){
-        orderService.addProductToOrder(id,products);
-        return new ResponseEntity<>("Successfully added "+ products + " to "+ id, HttpStatus.OK);
+    @PostMapping(value = "/orders/{id}/products")
+    public ResponseEntity<Object> addProducts(@PathVariable(value = "id") long id, Product product){
+        orderService.addProductToOrder(id, product);
+        return new ResponseEntity<>("Added" +product + "successfully", HttpStatus.OK);
     }
 
 }

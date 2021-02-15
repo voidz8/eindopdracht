@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.Serializable;
 import java.util.Collection;
-import java.util.Optional;
 import java.util.Set;
 
 
 @RestController
-public class EmployeeController {
+public class EmployeeController implements Serializable {
 
     @Autowired
     private EmployeeService employeeService;
@@ -61,7 +61,7 @@ public class EmployeeController {
         Collection<Role> roles = employeeService.getRoles(name);
         return new ResponseEntity<>(roles, HttpStatus.OK);
     }
-    @PostMapping(value = "/employees/{name}")
+    @PostMapping(value = "/employees/{name}/roles")
     public ResponseEntity<Object> addRoles(@PathVariable(value = "name") String name, Set<Role> roles){
     employeeService.addRole(name,roles);
     return new ResponseEntity<>("Successfully added "+roles+ " to "+name, HttpStatus.OK);
