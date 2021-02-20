@@ -8,6 +8,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -27,13 +29,14 @@ public class Order implements Serializable {
     @Getter
     @Setter
     @Column(name = "order_number", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long orderNumber;
 
     @Getter
     @Setter
     @JsonDeserialize
     @ManyToOne
-    @JoinColumn(name = "company_name")
+    @JoinColumn(name = "companyName")
     private Client client;
 
     @Getter
@@ -65,12 +68,6 @@ public class Order implements Serializable {
     public void addProduct(Product product){this.products.add(product);}
 
     public Order() {
-    }
-
-    public Order(long orderNumber, LocalDate productionDate, LocalDate deliveryDate) {
-        this.orderNumber = orderNumber;
-        this.productionDate = productionDate;
-        this.deliveryDate = deliveryDate;
     }
 
     public Order(Client client, long orderNumber, LocalDate productionDate, LocalDate deliveryDate) {

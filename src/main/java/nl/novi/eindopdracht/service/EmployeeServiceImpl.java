@@ -1,17 +1,14 @@
 package nl.novi.eindopdracht.service;
 
-import nl.novi.eindopdracht.exceptions.EmployeeAlreadyExists;
 import nl.novi.eindopdracht.exceptions.EmployeeNotFoundException;
 import nl.novi.eindopdracht.model.Employee;
 import nl.novi.eindopdracht.model.Machine;
 import nl.novi.eindopdracht.model.Role;
 import nl.novi.eindopdracht.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -27,29 +24,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Optional<Employee> getEmployeeByFullName(String name) {
-    if(!employeeRepository.existsByName(name)) {throw new EmployeeNotFoundException();}
-    return employeeRepository.findByName(name);
+    public Optional<Employee> getEmployeeByEmail(String email) {
+    if(!employeeRepository.existsByEmail(email)) {throw new EmployeeNotFoundException();}
+    return employeeRepository.findByEmail(email);
     }
 
     @Override
     public String createEmployee(Employee employee) {
     Employee newEmployee = employeeRepository.save(employee);
-    if (employeeRepository.existsByName(newEmployee.getName())){throw new EmployeeAlreadyExists();}
     return newEmployee.getName();}
 
     @Override
-    public void deleteEmployee(String name) {
-        if(!employeeRepository.existsByName(name)){throw new EmployeeNotFoundException();}
-        employeeRepository.deleteById(name);
+    public void deleteEmployee(String email) {
+        if(!employeeRepository.existsByEmail(email)){throw new EmployeeNotFoundException();}
+        employeeRepository.deleteById(email);
     }
 
     @Override
-    public void updateEmployee(String name, Employee employee) {
-    if(!employeeRepository.existsByName(name)){throw new EmployeeNotFoundException();}
-    Employee existingEmployee = employeeRepository.findByName(name).orElse(null);
+    public void updateEmployee(String email, Employee employee) {
+    if(!employeeRepository.existsByEmail(email)){throw new EmployeeNotFoundException();}
+    Employee existingEmployee = employeeRepository.findByEmail(email).orElse(null);
     existingEmployee.setName(employee.getName());
-    existingEmployee.setEmail(employee.getName());
     existingEmployee.setPassword(employee.getPassword());
     existingEmployee.setMachines(employee.getMachines());
     existingEmployee.setRoles(employee.getRoles());
@@ -58,10 +53,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void partialUpdateEmployee(String name, String email, String password, Machine machine, Role roles, Employee employee) {
-    if (!employeeRepository.existsByName(name)){throw new EmployeeNotFoundException();}
-    Employee existingEmployee = employeeRepository.findByName(name).orElse(null);
+    if (!employeeRepository.existsByEmail(email)){throw new EmployeeNotFoundException();}
+    Employee existingEmployee = employeeRepository.findByEmail(email).orElse(null);
     if (existingEmployee.getName() != null){existingEmployee.setName(employee.getName());}
-    if (existingEmployee.getEmail() != null){existingEmployee.setEmail(employee.getEmail());}
     if (existingEmployee.getPassword() !=null){existingEmployee.setPassword(employee.getPassword()); }
     if (existingEmployee.getMachines() != null){existingEmployee.setMachines(employee.getMachines());}
     if (existingEmployee.getRoles() != null){existingEmployee.setRoles(employee.getRoles());}
@@ -69,16 +63,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Collection<Role> getRoles(String name) {
-        if(!employeeRepository.existsByName(name)){throw new EmployeeNotFoundException();}
-        Optional<Employee> employee = employeeRepository.findByName(name);
+    public Collection<Role> getRoles(String email) {
+        if(!employeeRepository.existsByEmail(email)){throw new EmployeeNotFoundException();}
+        Optional<Employee> employee = employeeRepository.findByEmail(email);
         return employee.get().getRoles();
     }
 
     @Override
-    public void addRole(String name, Set<Role> roles) {
-        if (!employeeRepository.existsByName(name)){throw new EmployeeNotFoundException();}
-        Employee employee = employeeRepository.findByName(name).orElse(null);
+    public void addRole(String email, Set<Role> roles) {
+        if (!employeeRepository.existsByEmail(email)){throw new EmployeeNotFoundException();}
+        Employee employee = employeeRepository.findByEmail(email).orElse(null);
         employee.setRoles(roles);
         employeeRepository.save(employee);
     }

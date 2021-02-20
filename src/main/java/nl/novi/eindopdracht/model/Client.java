@@ -42,8 +42,11 @@ public class Client implements Serializable {
 
     @Getter
     @Setter
-    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval = true, mappedBy = "client")
-    @JsonIgnore
+    @OneToMany(targetEntity = Order.class,
+            fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            orphanRemoval = true,
+            mappedBy = "client")
     private Set<Order> orders = new HashSet<>();
 
     public Client() {

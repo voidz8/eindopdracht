@@ -19,6 +19,4 @@ public interface ClientService {
     void updateClientPartial(String companyName, String email, Long debtorNumber, Set<Order> orders,Client client);
     boolean clientExistsByName(String companyName);
     Collection<Order> getAllOrders(String companyName);
-
-
 }

@@ -12,10 +12,10 @@ import java.util.Set;
 public interface EmployeeService {
     Collection<Employee> getAllEmployees();
     boolean employeeExists(String name);
-    Optional<Employee> getEmployeeByFullName(String name);
+    Optional<Employee> getEmployeeByEmail(String email);
     String createEmployee(Employee employee);
-    void deleteEmployee(String name);
-    void updateEmployee(String name, Employee employee);
+    void deleteEmployee(String email);
+    void updateEmployee(String email, Employee employee);
     void partialUpdateEmployee(String name, String email, String password, Machine machine, Role roles, Employee employee);
     Collection<Role> getRoles(String name);
     void addRole(String name, Set<Role> roles);

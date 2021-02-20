@@ -1,7 +1,7 @@
 package nl.novi.eindopdracht.model;
 
 public enum EMachine {
-    PORTAAL_FREES,
+    PORTAALFREES,
     CONVENTIONEEL,
     LASER,
     DRAAIBANK,

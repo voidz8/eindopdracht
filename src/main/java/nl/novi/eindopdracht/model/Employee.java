@@ -20,15 +20,15 @@ import java.util.Set;
 @Entity
 public class Employee {
 
-    @Id
     @Getter
     @Setter
     @Column(name = "fullName", nullable = false, unique = true)
     private String name;
 
+    @Id
     @Getter
     @Setter
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Getter
