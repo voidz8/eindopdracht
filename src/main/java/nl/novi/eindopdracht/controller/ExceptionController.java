@@ -2,13 +2,11 @@ package nl.novi.eindopdracht.controller;
 
 import nl.novi.eindopdracht.exceptions.BadRequestException;
 import nl.novi.eindopdracht.exceptions.ClientNotFoundException;
-import nl.novi.eindopdracht.exceptions.EmployeeNotFoundException;
 import nl.novi.eindopdracht.exceptions.ForbiddenException;
 import nl.novi.eindopdracht.exceptions.MachineNotFoundException;
 import nl.novi.eindopdracht.exceptions.OrderNotFoundException;
 import nl.novi.eindopdracht.exceptions.ProductNotFoundException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
-import nl.novi.eindopdracht.model.Client;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

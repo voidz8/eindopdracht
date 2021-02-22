@@ -1,7 +1,7 @@
 package nl.novi.eindopdracht.service;
 
 import nl.novi.eindopdracht.model.EMachine;
-import nl.novi.eindopdracht.model.Employee;
+import nl.novi.eindopdracht.model.User;
 import nl.novi.eindopdracht.model.Machine;
 
 import java.util.Collection;
@@ -13,5 +13,5 @@ public interface MachineService {
     Optional<Machine> getMachineById(long id);
     EMachine createMachine(Machine machine);
     void deleteMachine(long id);
-    Collection<Employee> getEmployee(long id);
+    Collection<User> getEmployee(long id);
 }

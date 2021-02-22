@@ -16,16 +16,16 @@ import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
-@Table(name = "employee")
+@Table(name = "app_user")
 @Entity
-public class Employee {
-
-    @Getter
-    @Setter
-    @Column(name = "fullName", nullable = false, unique = true)
-    private String name;
+public class User {
 
     @Id
+    @Getter
+    @Setter
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
     @Getter
     @Setter
     @Column(name = "email", nullable = false, unique = true)
@@ -40,35 +40,34 @@ public class Employee {
     @Getter
     @Setter
     @ManyToMany
-    @JoinTable(name = "employee_machine",
-            joinColumns = @JoinColumn(name = "name"),
+    @JoinTable(name = "user_machine",
+            joinColumns = @JoinColumn(name = "username"),
             inverseJoinColumns = @JoinColumn(name = "machine_id"))
     private Set<Machine> machines = new HashSet<>();
 
     @Getter
     @Setter
     @ManyToMany
-    @JoinTable(name = "employee_role",
-            joinColumns = @JoinColumn(name = "name"),
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "username"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
 
-    public Employee() {
+    public User() {
     }
 
-    public Employee(String name, String email, String password, Set<Machine> machines, Set<Role> roles) {
-        this.name = name;
+    public User(String username, String email, Set<Machine> machines, Set<Role> roles) {
+        this.username = username;
         this.email = email;
-        this.password = password;
         this.machines = machines;
         this.roles = roles;
     }
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "name='" + name + '\'' +
+        return "User{" +
+                "username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", machines=" + machines +
                 ", roles=" + roles +

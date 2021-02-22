@@ -2,7 +2,7 @@ package nl.novi.eindopdracht.service;
 
 import nl.novi.eindopdracht.exceptions.MachineNotFoundException;
 import nl.novi.eindopdracht.model.EMachine;
-import nl.novi.eindopdracht.model.Employee;
+import nl.novi.eindopdracht.model.User;
 import nl.novi.eindopdracht.model.Machine;
 import nl.novi.eindopdracht.repository.MachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class MachineServiceImpl implements MachineService{
     }
 
     @Override
-    public Collection<Employee> getEmployee(long id) {
+    public Collection<User> getEmployee(long id) {
         if (!machineRepository.existsById(id)){throw new MachineNotFoundException();}
         Optional<Machine> machine= machineRepository.findById(id);
         return machine.get().getEmployee();

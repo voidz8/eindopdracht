@@ -34,7 +34,7 @@ public class Machine {
     @Getter
     @Setter
     @ManyToMany(mappedBy = "machines")
-    private Set<Employee> employee= new HashSet<>();
+    private Set<User> users= new HashSet<>();
 
     @Getter
     @Setter

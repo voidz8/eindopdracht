@@ -22,7 +22,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "client")
-public class Client implements Serializable {
+public class Client {
 
     @Id
     @Getter
@@ -42,6 +42,7 @@ public class Client implements Serializable {
 
     @Getter
     @Setter
+    @JsonIgnore
     @OneToMany(targetEntity = Order.class,
             fetch=FetchType.LAZY,
             cascade=CascadeType.ALL,

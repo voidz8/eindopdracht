@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.util.Collection;
 import java.util.List;
@@ -26,15 +27,14 @@ import java.util.Map;
 import java.util.Set;
 
 @RestController
-public class ClientController {
+public class ClientController implements Serializable {
 
     @Autowired
     private ClientService clientService;
 
     @GetMapping(value = "/clients")
     public ResponseEntity<Object> getClients(){
-        List<Client> clients = clientService.getallClients();
-        return new ResponseEntity<>(clients, HttpStatus.OK);
+        return new ResponseEntity<>(clientService.getAllClients(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/clients/{companyName}")
@@ -61,8 +61,8 @@ public class ClientController {
     }
 
     @PatchMapping(value = "/clients/{companyName}")
-    public ResponseEntity<Object> updateClientPartial(@PathVariable(value = "companyName") String companyName, String email, Long debtorNumber, Set<Order> orders, @RequestBody Client client){
-        clientService.updateClientPartial(companyName, email, debtorNumber,orders,client);
+    public ResponseEntity<Object> updateClientPartial(@PathVariable(value = "companyName") String companyName,@RequestBody Client client){
+        clientService.updateClientPartial(companyName, client);
         return new ResponseEntity<>("Client " +companyName +" is updated." , HttpStatus.OK);
     }
     @GetMapping(value = "/clients/{companyName)/orders")
