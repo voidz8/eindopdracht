@@ -42,9 +42,9 @@ public class MachineServiceImpl implements MachineService{
     }
 
     @Override
-    public Collection<User> getEmployee(long id) {
+    public Collection<User> getUser(long id) {
         if (!machineRepository.existsById(id)){throw new MachineNotFoundException();}
         Optional<Machine> machine= machineRepository.findById(id);
-        return machine.get().getEmployee();
+        return machine.get().getUsers();
     }
 }

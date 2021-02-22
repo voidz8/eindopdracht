@@ -7,6 +7,7 @@ import nl.novi.eindopdracht.exceptions.MachineNotFoundException;
 import nl.novi.eindopdracht.exceptions.OrderNotFoundException;
 import nl.novi.eindopdracht.exceptions.ProductNotFoundException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
+import nl.novi.eindopdracht.exceptions.UserNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,8 +25,8 @@ public class ExceptionController {
     public ResponseEntity<Object> exception(BadRequestException exception) {
         return ResponseEntity.badRequest().build();
     }
-    @ExceptionHandler(value = EmployeeNotFoundException.class)
-    public ResponseEntity<Object> exception(EmployeeNotFoundException exception) {
+    @ExceptionHandler(value = UserNotFoundException.class)
+    public ResponseEntity<Object> exception(UserNotFoundException exception) {
         return ResponseEntity.notFound().build();
     }
     @ExceptionHandler(value = ForbiddenException.class)

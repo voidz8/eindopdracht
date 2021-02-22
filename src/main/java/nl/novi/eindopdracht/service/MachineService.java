@@ -13,5 +13,5 @@ public interface MachineService {
     Optional<Machine> getMachineById(long id);
     EMachine createMachine(Machine machine);
     void deleteMachine(long id);
-    Collection<User> getEmployee(long id);
+    Collection<User> getUser(long id);
 }
