@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.Temporal;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -66,11 +68,13 @@ public class OrderServiceImpl implements OrderService{
             case "companyname":
                 order.setClient((Client) fields.get(field));
                 break;
-            case "production_date":
-                order.setProductionDate((LocalDate) fields.get(field));
+            case "productiondate":
+                LocalDate newProdDate = LocalDate.parse(fields.get(field).toString());
+                order.setProductionDate(newProdDate);
                 break;
-            case "delivery_date":
-                order.setDeliveryDate((LocalDate) fields.get(field));
+            case "deliverydate":
+                LocalDate newDeliveryDate = LocalDate.parse(fields.get(field).toString());
+                order.setDeliveryDate(newDeliveryDate);
                 break;
             }
         }

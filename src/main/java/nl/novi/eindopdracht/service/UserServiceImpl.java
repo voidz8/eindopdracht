@@ -114,8 +114,9 @@ public class UserServiceImpl implements UserService {
     public void removeMachine(String username) {
         if (!userRepository.existsByUsername(username)){throw new UserNotFoundException();}
         User user = userRepository.findByUsername(username).get();
-        for(Machine machine : user.getMachines()){
+        for (Machine machine : user.getMachines()){
             user.removeMachine(machine);
         }
+        userRepository.save(user);
     }
 }

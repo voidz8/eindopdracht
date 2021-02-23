@@ -40,7 +40,7 @@ public class User {
 
     @Getter
     @Setter
-    @ManyToMany
+    @ManyToMany(cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JsonIgnore
     @JoinTable(name = "user_machine",
             joinColumns = @JoinColumn(name = "username"),
@@ -49,7 +49,7 @@ public class User {
 
     @Getter
     @Setter
-    @ManyToMany(cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(cascade =CascadeType.PERSIST)
     @JsonIgnore
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "username"),
@@ -60,6 +60,7 @@ public class User {
     public void removeRole(Role role){this.roles.remove(role);
     role.getUsers().remove(this);}
     public void addMachine(Machine machine){this.machines.add(machine);}
+
     public void removeMachine(Machine machine){this.machines.remove(machine);
     machine.getUsers().remove(this);}
 

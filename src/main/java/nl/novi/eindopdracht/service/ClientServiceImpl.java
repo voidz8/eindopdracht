@@ -58,12 +58,12 @@ public class ClientServiceImpl implements ClientService {
         if(!clientRepository.existsClientByCompanyName(companyName)) {throw new ClientNotFoundException();}
         Client client = clientRepository.findByCompanyName(companyName).get();
         for (String field : fields.keySet()){
-            switch (field.toLowerCase()){
+            switch (field){
                 case "email":
                     client.setEmail((String) fields.get(field));
                     break;
-                case "debtor_number":
-                    client.setDebtorNumber((Long) fields.get(field));
+                case "debtorNumber":
+                    client.setDebtorNumber((Integer) fields.get(field));
                     break;
             }
         }
@@ -73,8 +73,8 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Collection<Order> getAllOrders(String companyName) {
         if(!clientRepository.existsClientByCompanyName(companyName)){throw new ClientNotFoundException();}
-        Optional<Client> client = clientRepository.findByCompanyName(companyName);
-        return client.get().getOrders();
+        Client client = clientRepository.findByCompanyName(companyName).get();
+        return client.getOrders();
     }
 
 

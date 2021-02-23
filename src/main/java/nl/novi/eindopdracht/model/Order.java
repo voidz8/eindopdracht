@@ -1,8 +1,10 @@
 package nl.novi.eindopdracht.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.jpa.repository.Temporal;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,7 +36,7 @@ public class Order implements Serializable {
 
     @Getter
     @Setter
-    @JsonDeserialize
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "companyName")
     private Client client;

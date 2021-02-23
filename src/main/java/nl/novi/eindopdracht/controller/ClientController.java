@@ -67,8 +67,7 @@ public class ClientController implements Serializable {
     }
     @GetMapping(value = "/clients/{companyName)/orders")
     public ResponseEntity<Object> getAllOrders(@RequestParam(value = "companyName") String companyName){
-        Collection<Order> orders = clientService.getAllOrders(companyName);
-        return new ResponseEntity<>(orders, HttpStatus.OK);
+        return new ResponseEntity<>(clientService.getAllOrders(companyName), HttpStatus.OK);
     }
 
 }

@@ -37,12 +37,11 @@ public class Client {
 
     @Getter
     @Setter
-    @Column(name = "debtor_number", nullable = false)
-    private Long debtorNumber;
+    @Column(name = "debtor_number", nullable = false, unique = true)
+    private long debtorNumber;
 
     @Getter
     @Setter
-    @JsonIgnore
     @OneToMany(targetEntity = Order.class,
             fetch=FetchType.LAZY,
             cascade=CascadeType.ALL,
@@ -53,8 +52,9 @@ public class Client {
     public Client() {
     }
 
-    public Client(Set<Order> orders) {
-        this.orders = orders;
+    public Client(String companyName, String email) {
+        this.companyName = companyName;
+        this.email = email;
     }
 
     public Client(String companyName, String email, Long debtorNumber) {

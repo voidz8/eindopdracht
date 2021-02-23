@@ -1,8 +1,16 @@
 INSERT into client (company_name, email, debtor_number) VALUES('Profplastic', 'info@profplastic.com', 1234)
 
 INSERT into orders(company_name, production_date, delivery_date) VALUES ( 'Profplastic', '2020-02-02', '2020-01-02')
+INSERT into orders(company_name, production_date, delivery_date) VALUES ( 'Profplastic', '2020-02-02', '2020-01-02')
+INSERT into orders(company_name, production_date, delivery_date) VALUES ( 'Profplastic', '2020-02-02', '2020-01-02')
+INSERT into orders(company_name, production_date, delivery_date) VALUES ( 'Profplastic', '2020-02-02', '2020-01-02')
 
 INSERT into machine(machine) VALUES ('PORTAALFREES')
+INSERT into machine(machine) VALUES ('CONVENTIONEEL')
+INSERT into machine(machine) VALUES ('LASER')
+INSERT into machine(machine) VALUES ('DRAAIBANK')
+INSERT into machine(machine) VALUES ('BUIGBANK')
+INSERT into machine(machine) VALUES ('ZAAG')
 
 INSERT into product(drawing_number, operation_time) VALUES ('a1',60)
 
@@ -25,3 +33,10 @@ INSERT into user_role(username, role_id) VALUES ('phase', 3)
 INSERT into user_role(username, role_id) VALUES ('flame', 4)
 INSERT into user_role(username, role_id) VALUES ('bolton', 5)
 
+INSERT into user_machine(username, machine_id) VALUES ('chip', 1)
+INSERT into user_machine(username, machine_id) VALUES ('chip', 2)
+INSERT into user_machine(username, machine_id) VALUES ('harry', 2)
+INSERT into user_machine(username, machine_id) VALUES ('phase', 3)
+INSERT into user_machine(username, machine_id) VALUES ('flame', 4)
+INSERT into user_machine(username, machine_id) VALUES ('bolton', 5)
+INSERT into user_machine(username, machine_id) VALUES ('arme', 6)

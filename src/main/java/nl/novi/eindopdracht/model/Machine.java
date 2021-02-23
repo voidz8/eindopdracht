@@ -3,10 +3,12 @@ package nl.novi.eindopdracht.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +35,7 @@ public class Machine {
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "machines")
+    @ManyToMany(mappedBy = "machines", cascade =CascadeType.PERSIST)
     private Set<User> users= new HashSet<>();
 
     @Getter
@@ -43,15 +45,19 @@ public class Machine {
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "operations")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "operations", cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Order> orders = new HashSet<>();
 
-    public void addEmployee(){}
 
     public Machine() {
     }
 
     public Machine(EMachine machine) {
         this.machine = machine;
+    }
+
+    @Override
+    public String toString() {
+        return "machine " + machine ;
     }
 }

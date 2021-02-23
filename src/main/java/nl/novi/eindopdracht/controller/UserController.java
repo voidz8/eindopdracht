@@ -40,7 +40,7 @@ public class UserController implements Serializable {
     @PostMapping(value = "/users")
     public ResponseEntity<Object> createEmployee(@RequestBody User user){
         String newUser = userService.createUser(user);
-        return new ResponseEntity<>("A new user is created: "+newUser+".", HttpStatus.CREATED);
+        return new ResponseEntity<>("A new user is created: " + newUser + ".", HttpStatus.CREATED);
     }
     @DeleteMapping(value = "/users/{username}")
     public ResponseEntity<Object> deleteEmployee(@PathVariable(value = "username") String username){
@@ -64,7 +64,7 @@ public class UserController implements Serializable {
     @PostMapping(value = "/users/{username}/roles")
     public ResponseEntity<Object> addRole(@PathVariable(value = "username") String username, @RequestBody Role role){
     userService.addRole(username,role);
-    return new ResponseEntity<>("Successfully added " + role + " to " + username, HttpStatus.OK);
+    return new ResponseEntity<>("Successfully added " + role + " to " + username + ".", HttpStatus.OK);
     }
     @DeleteMapping(value = "/users/{username}/roles")
     public ResponseEntity<Object> removeRole(@PathVariable(value = "username") String username){
@@ -78,7 +78,7 @@ public class UserController implements Serializable {
     @PostMapping(value = "/users/{username}/machines")
     public ResponseEntity<Object> addMachine(@PathVariable(value = "username") String username, @RequestBody Machine machine){
         userService.addMachine(username,machine);
-        return new ResponseEntity<>("Successfully added "+ machine + " to " + username, HttpStatus.OK);
+        return new ResponseEntity<>("Successfully added "+ machine + " to " + username + ".", HttpStatus.OK);
     }
     @DeleteMapping(value = "/users/{username}/machines")
     public ResponseEntity<Object> removeMachine(@PathVariable(value = "username") String username){

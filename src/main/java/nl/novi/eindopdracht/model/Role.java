@@ -40,12 +40,6 @@ public class Role {
     @ManyToMany( fetch = FetchType.LAZY, mappedBy = "roles", cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<User> users = new HashSet<>();
 
-    public void removeRoleFromUser(){
-        for (User u : users){
-            u.getRoles().remove(this);
-        }
-    }
-
     public Role(){}
 
     @Override
