@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -52,19 +53,37 @@ public class UserController implements Serializable {
         return new ResponseEntity<>(username+ " is updated.", HttpStatus.OK);
     }
     @PatchMapping(value = "/users/{username}")
-    public ResponseEntity<Object> updateEmployeePartial(@PathVariable(value = "username")@RequestBody User user, String email, String password, Machine machine, Role roles, String username) {
-        userService.partialUpdateUser(username, email, password, machine, roles, user);
+    public ResponseEntity<Object> updateEmployeePartial(@PathVariable(value = "username") String username,@RequestBody Map<String, Object> fields) {
+        userService.partialUpdateUser(username,fields);
         return new ResponseEntity<>(username + " is updated.", HttpStatus.OK);
     }
     @GetMapping(value = "/users/{username}/roles")
     public ResponseEntity<Object> getRoles(@PathVariable(value = "username") String username){
-        Collection<Role> roles = userService.getRoles(username);
-        return new ResponseEntity<>(roles, HttpStatus.OK);
+        return new ResponseEntity<>(userService.getRoles(username), HttpStatus.OK);
     }
     @PostMapping(value = "/users/{username}/roles")
-    public ResponseEntity<Object> addRoles(@PathVariable(value = "username") String username, Set<Role> roles){
-    userService.addRole(username, roles);
-    return new ResponseEntity<>("Successfully added "+roles+ " to "+username, HttpStatus.OK);
+    public ResponseEntity<Object> addRole(@PathVariable(value = "username") String username, @RequestBody Role role){
+    userService.addRole(username,role);
+    return new ResponseEntity<>("Successfully added " + role + " to " + username, HttpStatus.OK);
+    }
+    @DeleteMapping(value = "/users/{username}/roles")
+    public ResponseEntity<Object> removeRole(@PathVariable(value = "username") String username){
+        userService.removeRole(username);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @GetMapping(value = "users/{username}/machines")
+    public ResponseEntity<Object> getMachines(@PathVariable(value = "username") String username){
+        return new ResponseEntity<>(userService.getMachines(username), HttpStatus.OK);
+    }
+    @PostMapping(value = "/users/{username}/machines")
+    public ResponseEntity<Object> addMachine(@PathVariable(value = "username") String username, @RequestBody Machine machine){
+        userService.addMachine(username,machine);
+        return new ResponseEntity<>("Successfully added "+ machine + " to " + username, HttpStatus.OK);
+    }
+    @DeleteMapping(value = "/users/{username}/machines")
+    public ResponseEntity<Object> removeMachine(@PathVariable(value = "username") String username){
+    userService.removeMachine(username);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

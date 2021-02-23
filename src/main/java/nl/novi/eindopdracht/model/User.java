@@ -1,17 +1,18 @@
 package nl.novi.eindopdracht.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
@@ -40,6 +41,7 @@ public class User {
     @Getter
     @Setter
     @ManyToMany
+    @JsonIgnore
     @JoinTable(name = "user_machine",
             joinColumns = @JoinColumn(name = "username"),
             inverseJoinColumns = @JoinColumn(name = "machine_id"))
@@ -47,14 +49,25 @@ public class User {
 
     @Getter
     @Setter
-    @ManyToMany
+    @ManyToMany(cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JsonIgnore
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "username"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    public void addRole(Role role){this.roles.add(role);}
+    public void removeRole(Role role){this.roles.remove(role);
+    role.getUsers().remove(this);}
+    public void addMachine(Machine machine){this.machines.add(machine);}
+    public void removeMachine(Machine machine){this.machines.remove(machine);
+    machine.getUsers().remove(this);}
 
     public User() {
+    }
+
+    public User(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public User(String username, String email, Set<Machine> machines, Set<Role> roles) {

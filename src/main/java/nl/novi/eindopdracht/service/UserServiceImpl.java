@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -53,32 +54,68 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void partialUpdateUser(String username, String email, String password, Machine machine, Role roles, User employee) {
-    if (!userRepository.existsByUsername(username)){throw new UserNotFoundException();}
-    User existingUser = userRepository.findByUsername(username).get();
-    if (existingUser.getUsername() != null){existingUser.setUsername(employee.getUsername());}
-    if (existingUser.getPassword() !=null){existingUser.setPassword(employee.getPassword()); }
-    if (existingUser.getMachines() != null){existingUser.setMachines(employee.getMachines());}
-    if (existingUser.getRoles() != null){existingUser.setRoles(employee.getRoles());}
-    userRepository.save(existingUser);
+    public void partialUpdateUser(String username, Map<String, Object> fields) {
+        if(!userRepository.existsByUsername(username)){throw new UserNotFoundException();}
+        User user = userRepository.findByUsername(username).get();
+        for (String field : fields.keySet()) {
+            switch (field.toLowerCase()) {
+                case "email":
+                    user.setEmail((String) fields.get(field));
+                    break;
+                case "password":
+                    user.setPassword((String) fields.get(field));
+                    break;
+            }
+        }
+        userRepository.save(user);
     }
 
     @Override
     public Collection<Role> getRoles(String username) {
         if(!userRepository.existsByUsername(username)){throw new UserNotFoundException();}
-        Optional<User> employee = userRepository.findByUsername(username);
-        return employee.get().getRoles();
+        User user = userRepository.findByUsername(username).get();
+        return user.getRoles();
     }
 
     @Override
-    public void addRole(String username, Set<Role> roles) {
+    public void addRole(String username, Role role) {
         if (!userRepository.existsByUsername(username)){throw new UserNotFoundException();}
-        User employee = userRepository.findByUsername(username).get();
-        employee.setRoles(roles);
-        userRepository.save(employee);
+        User user = userRepository.findByUsername(username).get();
+        user.addRole(role);
+        userRepository.save(user);
     }
 
+    @Override
+    public void removeRole(String username) {
+        if (!userRepository.existsByUsername(username)){throw new UserNotFoundException();}
+        User user = userRepository.findByUsername(username).get();;
+        for (Role role : user.getRoles()){
+            user.removeRole(role);
+        };
+        userRepository.save(user);
+    }
 
+    @Override
+    public Collection<Machine> getMachines(String username) {
+        if (!userRepository.existsByUsername(username)){throw new UserNotFoundException();}
+        Optional<User> user = userRepository.findByUsername(username);
+        return user.get().getMachines();
+    }
 
+    @Override
+    public void addMachine(String username, Machine machine) {
+    if (!userRepository.existsByUsername(username)){throw new UserNotFoundException();}
+    User user = userRepository.findByUsername(username).get();
+    user.addMachine(machine);
+    userRepository.save(user);
+    }
 
+    @Override
+    public void removeMachine(String username) {
+        if (!userRepository.existsByUsername(username)){throw new UserNotFoundException();}
+        User user = userRepository.findByUsername(username).get();
+        for(Machine machine : user.getMachines()){
+            user.removeMachine(machine);
+        }
+    }
 }

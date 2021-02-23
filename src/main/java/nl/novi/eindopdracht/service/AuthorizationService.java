@@ -84,7 +84,7 @@ public class AuthorizationService {
                         roles.add(adminRole);
                         break;
                     case "programmer":
-                        Role programmerRole = roleRepository.findByName(ERole.ROLE_MACHINPROGRAMMER)
+                        Role programmerRole = roleRepository.findByName(ERole.ROLE_MACHINEPROGRAMMER)
                                 .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
                         roles.add(programmerRole);
                         break;
