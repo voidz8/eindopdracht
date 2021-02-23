@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -50,14 +53,27 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void partialUpdateProduct(String drawingNumber, Machine operations, Duration operationTime, Order order, Product product) {
-    if (!productRepository.existsByDrawingNumber(drawingNumber)){throw new ProductNotFoundException();}
-        Product existingProduct = productRepository.findByDrawingNumber(drawingNumber).orElse(null);
-        if (existingProduct.getOperations() != null){existingProduct.setOperations(product.getOperations());}
-        if (existingProduct.getOperationTime() != null){existingProduct.setOperationTime(product.getOperationTime());}
-        if (existingProduct.getOrders() != null){existingProduct.setOrders(product.getOrders());}
-        productRepository.save(existingProduct);
+    public void addOperation(String drawingNumber, Machine machine) {
+        if (!productRepository.existsByDrawingNumber(drawingNumber)){throw new ProductNotFoundException();}
+        Product product = productRepository.findByDrawingNumber(drawingNumber).get();
+        product.addOperation(machine);
+        productRepository.save(product);
     }
 
+    @Override
+    public void removeOperation(String drawingNumber) {
+        if (!productRepository.existsByDrawingNumber(drawingNumber)){throw new ProductNotFoundException();}
+        Product product = productRepository.findByDrawingNumber(drawingNumber).get();
+        for (Machine machine : product.getOperations()){
+            product.removeOperation(machine);
+        }
+        productRepository.save(product);
+    }
 
+    @Override
+    public Collection<Machine> getOperations(String drawingNumber) {
+        if (!productRepository.existsByDrawingNumber(drawingNumber)){throw new ProductNotFoundException();}
+        Product product = productRepository.findByDrawingNumber(drawingNumber).get();
+        return product.getOperations();
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -19,9 +20,10 @@ public interface OrderService {
     void deleteOrder(long id);
     long createOrder(Order Order);
     void updateOrder(long id, Order order);
-    void updateOrderPartial(long id, Client client, Product product, Machine machine, LocalDate productionDate, LocalDate deliveryDate, Order order);
+    void updateOrderPartial(long id, Map<String, Object> fields);
     boolean orderExists(long id);
     Collection<Product> getProducts(long id);
-    void addProductToOrder(long id, Product product);
+    void addProduct(long id, Product product);
+    void removeProduct(long id);
 
 }

@@ -66,6 +66,8 @@ public class Order implements Serializable {
     private LocalDate deliveryDate;
 
     public void addProduct(Product product){this.products.add(product);}
+    public void removeProduct(Product product){this.products.remove(product);
+    product.getOrders().remove(this);}
 
     public Order() {
     }

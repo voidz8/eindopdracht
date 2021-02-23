@@ -16,7 +16,6 @@ public interface ClientService {
     void deleteClient(String companyName);
     String createClient(Client client);
     void updateClient(String companyName, Client client);
-    void updateClientPartial(String companyName, Client client);
-    boolean clientExistsByName(String companyName);
+    void updateClientPartial(String companyName, Map<String, Object> fields);
     Collection<Order> getAllOrders(String companyName);
 }

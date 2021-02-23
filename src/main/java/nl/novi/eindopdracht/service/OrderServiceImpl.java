@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -57,20 +58,23 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public void updateOrderPartial(long id, Client client, Product product, Machine machine, LocalDate productionDate, LocalDate deliveryDate, Order order) {
+    public void updateOrderPartial(long id, Map<String, Object> fields) {
     if(!orderRepository.existsById(id)) {throw new OrderNotFoundException();}
-    Order existingOrder = orderRepository.findById(id).orElse(null);
-    if(existingOrder.getClient() != null){
-        existingOrder.setClient(order.getClient());}
-    if(existingOrder.getOperations() !=null){
-        existingOrder.setOperations(order.getOperations());}
-    if(existingOrder.getDeliveryDate() != null){
-        existingOrder.setDeliveryDate(order.getDeliveryDate());}
-    if(existingOrder.getProducts() != null){
-        existingOrder.setProducts(order.getProducts());}
-    if(existingOrder.getProductionDate() != null){
-        existingOrder.setProductionDate(order.getProductionDate()); }
-    orderRepository.save(existingOrder);
+    Order order = orderRepository.findById(id).get();
+    for (String field : fields.keySet()){
+        switch (field.toLowerCase()){
+            case "companyname":
+                order.setClient((Client) fields.get(field));
+                break;
+            case "production_date":
+                order.setProductionDate((LocalDate) fields.get(field));
+                break;
+            case "delivery_date":
+                order.setDeliveryDate((LocalDate) fields.get(field));
+                break;
+            }
+        }
+        orderRepository.save(order);
     }
 
     @Override
@@ -86,10 +90,20 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public void addProductToOrder(long id, Product product) {
+    public void addProduct(long id, Product product) {
         if (!orderRepository.existsById(id)){throw new OrderNotFoundException();}
         Order order = orderRepository.findById(id).get();
         order.addProduct(product);
         orderRepository.save(order);
+    }
+
+    @Override
+    public void removeProduct(long id) {
+        if (!orderRepository.existsById(id)){throw new OrderNotFoundException();}
+        Order order = orderRepository.findById(id).get();
+        for (Product product : order.getProducts()){
+            order.removeProduct(product);
+        }
+
     }
 }

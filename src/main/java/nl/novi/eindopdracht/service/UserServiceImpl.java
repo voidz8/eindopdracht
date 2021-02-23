@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(username).get();;
         for (Role role : user.getRoles()){
             user.removeRole(role);
-        };
+        }
         userRepository.save(user);
     }
 

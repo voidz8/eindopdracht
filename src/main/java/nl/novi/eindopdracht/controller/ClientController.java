@@ -61,8 +61,8 @@ public class ClientController implements Serializable {
     }
 
     @PatchMapping(value = "/clients/{companyName}")
-    public ResponseEntity<Object> updateClientPartial(@PathVariable(value = "companyName") String companyName,@RequestBody Client client){
-        clientService.updateClientPartial(companyName, client);
+    public ResponseEntity<Object> updateClientPartial(@PathVariable(value = "companyName") String companyName,@RequestBody Map<String, Object> fields){
+        clientService.updateClientPartial(companyName, fields);
         return new ResponseEntity<>("Client " +companyName +" is updated." , HttpStatus.OK);
     }
     @GetMapping(value = "/clients/{companyName)/orders")

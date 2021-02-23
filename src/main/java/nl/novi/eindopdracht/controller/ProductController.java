@@ -7,6 +7,7 @@ import nl.novi.eindopdracht.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -45,15 +46,23 @@ public class ProductController implements Serializable {
         productService.updateProduct(drawingNumber,product);
         return new ResponseEntity<>("Product with drawingnumber: "+ drawingNumber + " is updated.", HttpStatus.OK);
     }
-    @PatchMapping(value = "/products/{drawingNumber}")
-    public ResponseEntity<Object> partialUpdateProduct(@PathVariable(value = "drawingNumber") String drawingNumber, @RequestBody Product product, Machine operations, Duration operationTime, Order order){
-        productService.partialUpdateProduct(drawingNumber, operations, operationTime, order, product);
-        return new ResponseEntity<>("Product with drawingnumber: "+ drawingNumber + " is updated.", HttpStatus.OK);
-    }
     @DeleteMapping(value = "/products/{drawingNumber}")
     public ResponseEntity<Object> deleteProduct(@PathVariable(value = "drawingNumber")String drawingNumber){
         productService.deleteProduct(drawingNumber);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
+    @GetMapping(value = "/products/{drawingNumber}/operations")
+    public ResponseEntity<Object> getOperations(@PathVariable(value = "drawingNumber") String drawingNumber){
+        return new ResponseEntity<>(productService.getOperations(drawingNumber), HttpStatus.OK);
+    }
+    @PostMapping(value = "/products{drawingNumber/operations}")
+    public ResponseEntity<Object> addOperation(@PathVariable(value = "drawingNumber") String drawingNumber, @RequestBody Machine machine){
+     productService.addOperation(drawingNumber,machine);
+     return new ResponseEntity<>("Successfully added " + machine + " to " + drawingNumber, HttpStatus.OK);
+    }
+    @DeleteMapping(value = "products/{drawingNumber}/operations")
+    public ResponseEntity<Object> removeOperation(@PathVariable(value = "drawingNumber") String drawingNumber){
+        productService.removeOperation(drawingNumber);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

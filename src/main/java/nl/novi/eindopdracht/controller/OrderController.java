@@ -61,8 +61,8 @@ public class OrderController {
     }
 
     @PatchMapping(value = "/orders/{id}")
-    public ResponseEntity<Object> updateOrderPartial(@PathVariable(value = "id") long id, Client client, Product product, Machine machine, LocalDate productionDate, LocalDate deliveryDate, @RequestBody Order order){
-        orderService.updateOrderPartial(id,client, product, machine, productionDate, deliveryDate, order);
+    public ResponseEntity<Object> updateOrderPartial(@PathVariable(value = "id") long id, @RequestBody Map<String, Object> fields){
+        orderService.updateOrderPartial(id, fields);
         return new ResponseEntity<>("Order with ordernumber"+ id +" is updated.", HttpStatus.OK);
     }
     @GetMapping(value = "/orders/{id}/products")
@@ -71,9 +71,14 @@ public class OrderController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
     @PostMapping(value = "/orders/{id}/products")
-    public ResponseEntity<Object> addProducts(@PathVariable(value = "id") long id, Product product){
-        orderService.addProductToOrder(id, product);
-        return new ResponseEntity<>("Added" +product + "successfully", HttpStatus.OK);
+    public ResponseEntity<Object> addProducts(@PathVariable(value = "id") long id, @RequestBody Product product){
+        orderService.addProduct(id, product);
+        return new ResponseEntity<>("Added " +product + "successfully", HttpStatus.OK);
+    }
+    @DeleteMapping(value = "/orders/{id}/products")
+    public ResponseEntity<Object> removeProduct(@PathVariable(value = "id") long id){
+        orderService.removeProduct(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -53,20 +54,21 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void updateClientPartial(String companyName,Client client) {
+    public void updateClientPartial(String companyName, Map<String, Object> fields) {
         if(!clientRepository.existsClientByCompanyName(companyName)) {throw new ClientNotFoundException();}
-        Client storedClient = clientRepository.findByCompanyName(companyName).orElse(null);
-        if (storedClient.getEmail() !=null){storedClient.setEmail(client.getEmail());}
-        if (storedClient.getDebtorNumber() !=null){storedClient.setDebtorNumber(client.getDebtorNumber());}
-        if (storedClient.getOrders() != null) {storedClient.setOrders(client.getOrders());}
-        clientRepository.save(storedClient);
+        Client client = clientRepository.findByCompanyName(companyName).get();
+        for (String field : fields.keySet()){
+            switch (field.toLowerCase()){
+                case "email":
+                    client.setEmail((String) fields.get(field));
+                    break;
+                case "debtor_number":
+                    client.setDebtorNumber((Long) fields.get(field));
+                    break;
+            }
+        }
+        clientRepository.save(client);
     }
-
-    @Override
-    public boolean clientExistsByName(String companyName){
-        return clientRepository.findByCompanyName(companyName).get() != null;
-    }
-
 
     @Override
     public Collection<Order> getAllOrders(String companyName) {

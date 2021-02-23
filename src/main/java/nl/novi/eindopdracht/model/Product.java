@@ -51,6 +51,10 @@ public class Product {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "products")
     private Set<Order> orders = new HashSet<>();
 
+    public void addOperation(Machine machine){this.operations.add(machine);}
+    public void removeOperation(Machine machine){this.operations.remove(machine);
+    machine.getProducts().remove(this);}
+
     public Product(String drawingNumber) {
         this.drawingNumber = drawingNumber;
     }
