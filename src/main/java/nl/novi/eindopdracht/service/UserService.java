@@ -7,7 +7,6 @@ import nl.novi.eindopdracht.model.Role;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 public interface UserService {
     Collection<User> getAllUsers();
@@ -21,5 +20,5 @@ public interface UserService {
     void removeRole(String username);
     Collection<Machine> getMachines(String username);
     void addMachine(String username, Machine machine);
-    void removeMachine(String username);
+    void removeMachine(String username, Machine machine);
 }

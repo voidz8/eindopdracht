@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
-
 
 @RestController
 public class UserController implements Serializable {
@@ -30,8 +28,7 @@ public class UserController implements Serializable {
 
     @GetMapping(value = "/users")
     public ResponseEntity<Object> getAllEmployees(){
-        Collection<User> employees = userService.getAllUsers();
-        return new ResponseEntity<>(employees, HttpStatus.OK);
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
     @GetMapping(value = "/users/{username}")
     public ResponseEntity<Object> getUser(@PathVariable(value = "username") String username){
@@ -81,8 +78,8 @@ public class UserController implements Serializable {
         return new ResponseEntity<>("Successfully added "+ machine + " to " + username + ".", HttpStatus.OK);
     }
     @DeleteMapping(value = "/users/{username}/machines")
-    public ResponseEntity<Object> removeMachine(@PathVariable(value = "username") String username){
-    userService.removeMachine(username);
+    public ResponseEntity<Object> removeMachine(@PathVariable(value = "username") String username, @RequestBody Machine machine){
+    userService.removeMachine(username, machine);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -67,7 +67,14 @@ public class Order implements Serializable {
     @Column(name = "delivery_date")
     private LocalDate deliveryDate;
 
-    public void addProduct(Product product){this.products.add(product);}
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "planning_id")
+    private Planning planning;
+
+    public void addProduct(Product product){this.products.add(product);
+    product.getOrders().add(this);}
     public void removeProduct(Product product){this.products.remove(product);
     product.getOrders().remove(this);}
 

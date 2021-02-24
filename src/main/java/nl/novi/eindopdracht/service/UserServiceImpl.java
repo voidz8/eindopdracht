@@ -8,6 +8,7 @@ import nl.novi.eindopdracht.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -111,12 +112,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void removeMachine(String username) {
+    public void removeMachine(String username, Machine machine) {
         if (!userRepository.existsByUsername(username)){throw new UserNotFoundException();}
         User user = userRepository.findByUsername(username).get();
-        for (Machine machine : user.getMachines()){
-            user.removeMachine(machine);
-        }
+        user.removeMachine(machine);
+        //for (Machine machine : user.getMachines()){
+          //  machine.getUsers().remove(user);
+        //}
         userRepository.save(user);
     }
 }

@@ -56,10 +56,12 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public void addRole(Role role){this.roles.add(role);}
+    public void addRole(Role role){this.roles.add(role);
+    role.getUsers().add(this);}
     public void removeRole(Role role){this.roles.remove(role);
     role.getUsers().remove(this);}
-    public void addMachine(Machine machine){this.machines.add(machine);}
+    public void addMachine(Machine machine){this.machines.add(machine);
+    machine.getUsers().add(this);}
 
     public void removeMachine(Machine machine){this.machines.remove(machine);
     machine.getUsers().remove(this);}
