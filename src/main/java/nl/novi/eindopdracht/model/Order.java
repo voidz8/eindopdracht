@@ -69,8 +69,8 @@ public class Order implements Serializable {
 
     @Getter
     @Setter
-    @ManyToOne
-    @JoinColumn(name = "planning_id")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "order_id")
     private Planning planning;
 
     public void addProduct(Product product){this.products.add(product);

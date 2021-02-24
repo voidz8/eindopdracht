@@ -1,6 +1,7 @@
 package nl.novi.eindopdracht.controller;
 
 import lombok.Getter;
+import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.model.Planning;
 import nl.novi.eindopdracht.service.PlanningService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,21 @@ public class PlanningController {
     @DeleteMapping(value = "/planning/{id}")
     public ResponseEntity<Object> deletePlanning(@PathVariable(value = "id") long id){
         planningService.deletePlanning(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @GetMapping(value = "/planning/{id}/orders")
+    public ResponseEntity<Object> getOrders(@PathVariable(value = "id") long id){
+        return new ResponseEntity<>(planningService.getOrders(id), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/planning/{id}/orders")
+    public ResponseEntity<Object> addOrder(@PathVariable(value = "id") long id, @RequestBody Order order){
+        planningService.addOrder(id, order);
+        return new ResponseEntity<>("Successfully added order " + order.getOrderNumber() + " to " + id +".", HttpStatus.OK);
+    }
+    @DeleteMapping(value = "/planning/{id}/orders")
+    public ResponseEntity<Object> removeOrder(@PathVariable(value = "id") long id, @RequestBody Order order){
+        planningService.removeOrder(id, order);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

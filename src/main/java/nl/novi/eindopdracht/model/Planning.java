@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -34,9 +36,8 @@ public class Planning {
     @Getter
     @Setter
     @OneToMany(targetEntity = Order.class,
-            fetch= FetchType.LAZY,
+            fetch= FetchType.EAGER,
             cascade= CascadeType.ALL,
-            orphanRemoval = true,
             mappedBy = "planning")
     private Set<Order> orders = new HashSet<>();
 

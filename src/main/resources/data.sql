@@ -40,3 +40,8 @@ INSERT into user_machine(username, machine_id) VALUES ('phase', 3)
 INSERT into user_machine(username, machine_id) VALUES ('flame', 4)
 INSERT into user_machine(username, machine_id) VALUES ('bolton', 5)
 INSERT into user_machine(username, machine_id) VALUES ('arme', 6)
+
+INSERT into planning(date) VALUES ('2020-02-01')
+INSERT into planning(date) VALUES ('2020-02-02')
+INSERT into planning(date) VALUES ('2020-02-03')
+INSERT into planning(date) VALUES ('2020-02-04')
