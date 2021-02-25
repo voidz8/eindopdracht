@@ -1,4 +1,7 @@
 INSERT into client (company_name, email, debtor_number) VALUES('Profplastic', 'info@profplastic.com', 1234)
+INSERT into client (company_name, email, debtor_number) VALUES('Hypesply', 'info@hypesply.com', 12)
+INSERT into client (company_name, email, debtor_number) VALUES('Hsproxies', 'info@hsproxies.com', 11)
+INSERT into client (company_name, email, debtor_number) VALUES('Polaris', 'info@polaris.com', 123)
 
 INSERT into orders(company_name, production_date, delivery_date) VALUES ( 'Profplastic', '2020-02-02', '2020-01-02')
 INSERT into orders(company_name, production_date, delivery_date) VALUES ( 'Profplastic', '2020-02-02', '2020-01-02')
