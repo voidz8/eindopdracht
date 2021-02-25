@@ -63,7 +63,7 @@ public class OrderController {
     @PatchMapping(value = "/orders/{id}")
     public ResponseEntity<Object> updateOrderPartial(@PathVariable(value = "id") long id, @RequestBody Map<String, Object> fields){
         orderService.updateOrderPartial(id, fields);
-        return new ResponseEntity<>("Order with ordernumber"+ id +" is updated.", HttpStatus.OK);
+        return new ResponseEntity<>("Order with ordernumber "+ id +" is updated.", HttpStatus.OK);
     }
     @GetMapping(value = "/orders/{id}/products")
     public ResponseEntity<Object> getProducts(@RequestParam(value = "id") long id){

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
 import java.time.Duration;
+import java.util.Map;
 
 @RestController
 public class ProductController implements Serializable {
@@ -50,6 +51,11 @@ public class ProductController implements Serializable {
     public ResponseEntity<Object> deleteProduct(@PathVariable(value = "drawingNumber")String drawingNumber){
         productService.deleteProduct(drawingNumber);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @PatchMapping(value = "/products/{drawingNumber}")
+    public ResponseEntity<Object> updateProductPartial(@PathVariable(value = "drawingNumber") String drawingNumber, @RequestBody Map<String, Object> fields){
+        productService.updateProductPartial(drawingNumber,fields);
+        return new ResponseEntity<>("Product with drawingnumber: " + drawingNumber + " is updated.",HttpStatus.OK);
     }
     @GetMapping(value = "/products/{drawingNumber}/operations")
     public ResponseEntity<Object> getOperations(@PathVariable(value = "drawingNumber") String drawingNumber){

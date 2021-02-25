@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -78,22 +79,22 @@ public class AuthorizationService {
         } else {
             strRoles.forEach(role -> {
                 switch (role){
-                    case "admin":
+                    case "ADMIN":
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
                         roles.add(adminRole);
                         break;
-                    case "programmer":
+                    case "PROGRAMMER":
                         Role programmerRole = roleRepository.findByName(ERole.ROLE_MACHINEPROGRAMMER)
                                 .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
                         roles.add(programmerRole);
                         break;
-                    case "planner":
+                    case "PLANNER":
                         Role plannerRole = roleRepository.findByName(ERole.ROLE_PLANNER)
                                 .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
                         roles.add(plannerRole);
                         break;
-                    case "worker":
+                    case "WORKER":
                         Role workerRole = roleRepository.findByName(ERole.ROLE_WORKSHOPWORKER)
                                 .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
                         roles.add(workerRole);
@@ -120,7 +121,7 @@ public class AuthorizationService {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getEmail(), roles));

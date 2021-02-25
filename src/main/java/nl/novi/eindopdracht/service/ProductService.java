@@ -17,6 +17,7 @@ public interface ProductService {
     String createProduct(Product product);
     void deleteProduct(String drawingNumber);
     void updateProduct(String drawingNumber, Product product);
+    void updateProductPartial(String drawingNumber, Map<String, Object> fields);
     Collection<Machine> getOperations(String drawingNumber);
     void addOperation(String drawingNumber, Machine machine);
     void removeOperation(String drawingNumber);

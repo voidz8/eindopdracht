@@ -64,8 +64,8 @@ public class UserController implements Serializable {
     return new ResponseEntity<>("Successfully added " + role + " to " + username + ".", HttpStatus.OK);
     }
     @DeleteMapping(value = "/users/{username}/roles")
-    public ResponseEntity<Object> removeRole(@PathVariable(value = "username") String username){
-        userService.removeRole(username);
+    public ResponseEntity<Object> removeRole(@PathVariable(value = "username") String username, @RequestBody Role role){
+        userService.removeRole(username, role);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @GetMapping(value = "users/{username}/machines")

@@ -17,7 +17,7 @@ public interface UserService {
     void partialUpdateUser(String username, Map<String, Object> fields);
     Collection<Role> getRoles(String username);
     void addRole(String username, Role role);
-    void removeRole(String username);
+    void removeRole(String username, Role role);
     Collection<Machine> getMachines(String username);
     void addMachine(String username, Machine machine);
     void removeMachine(String username, Machine machine);

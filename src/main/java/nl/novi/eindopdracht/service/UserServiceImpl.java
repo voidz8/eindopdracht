@@ -1,5 +1,6 @@
 package nl.novi.eindopdracht.service;
 
+import lombok.extern.slf4j.Slf4j;
 import nl.novi.eindopdracht.exceptions.UserNotFoundException;
 import nl.novi.eindopdracht.model.User;
 import nl.novi.eindopdracht.model.Machine;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -87,14 +89,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void removeRole(String username) {
+    public void removeRole(String username, Role role) {
         if (!userRepository.existsByUsername(username)){throw new UserNotFoundException();}
-        User user = userRepository.findByUsername(username).get();;
-        for (Role role : user.getRoles()){
-            user.removeRole(role);
-        }
+        User user = userRepository.findByUsername(username).get();
+        log.info("before remove: {}",user );
+        user.removeRole(role);
+        log.info("after remove: {}",user );
+        //for (Role role : user.getRoles()){
+          //  user.removeRole(role);
         userRepository.save(user);
     }
+
 
     @Override
     public Collection<Machine> getMachines(String username) {

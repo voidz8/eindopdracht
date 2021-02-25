@@ -37,7 +37,7 @@ public class Role {
 
     @Getter
     @Setter
-    @ManyToMany( fetch = FetchType.LAZY, mappedBy = "roles", cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany( fetch = FetchType.LAZY, mappedBy = "roles", cascade = CascadeType.ALL)
     private Set<User> users = new HashSet<>();
 
     public Role(){}

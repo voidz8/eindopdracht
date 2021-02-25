@@ -49,7 +49,7 @@ public class User {
 
     @Getter
     @Setter
-    @ManyToMany(cascade =CascadeType.PERSIST)
+    @ManyToMany(cascade =CascadeType.ALL)
     @JsonIgnore
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "username"),

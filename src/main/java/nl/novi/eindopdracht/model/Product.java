@@ -17,10 +17,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.sql.Blob;
 import java.time.Duration;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Table(name = "product")
@@ -36,6 +35,7 @@ public class Product {
     @Getter
     @Setter
     @ManyToMany
+    @JsonIgnore
     @JoinTable(name= "product_machine",
                 joinColumns = @JoinColumn(name = "drawing_number"),
                 inverseJoinColumns = @JoinColumn(name = "machine_id"))
@@ -48,10 +48,24 @@ public class Product {
 
     @Getter
     @Setter
+    @Column(name = "amount")
+    private long amount;
+
+    @Getter
+    @Setter
+    @Column(name = "material")
+    private String material;
+
+    @Getter
+    @Setter
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "products")
     private Set<Order> orders = new HashSet<>();
 
+    @Getter
+    @Setter
+    @Lob
+    private Blob image;
 
     public void addOperation(Machine machine){this.operations.add(machine);}
     public void removeOperation(Machine machine){this.operations.remove(machine);
@@ -64,10 +78,12 @@ public class Product {
     public Product() {
     }
 
-    public Product(String drawingNumber, Set<Machine> operations, Duration operationTime, Set<Order> orders) {
+    public Product(String drawingNumber, Set<Machine> operations, Duration operationTime, long amount, String material, Set<Order> orders) {
         this.drawingNumber = drawingNumber;
         this.operations = operations;
         this.operationTime = operationTime;
+        this.amount = amount;
+        this.material = material;
         this.orders = orders;
     }
 
