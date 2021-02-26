@@ -69,13 +69,4 @@ public class ClientServiceImpl implements ClientService {
         }
         clientRepository.save(client);
     }
-
-    @Override
-    public Collection<Order> getAllOrders(String companyName) {
-        if(!clientRepository.existsClientByCompanyName(companyName)){throw new ClientNotFoundException();}
-        Client client = clientRepository.findByCompanyName(companyName).get();
-        return client.getOrders();
-    }
-
-
 }

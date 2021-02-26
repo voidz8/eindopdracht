@@ -58,9 +58,6 @@ public class ClientController implements Serializable {
         clientService.updateClientPartial(companyName, fields);
         return new ResponseEntity<>("Client " +companyName +" is updated." , HttpStatus.OK);
     }
-    @GetMapping(value = "/clients/{companyName)/orders")
-    public ResponseEntity<Object> getAllOrders(@RequestParam(value = "companyName") String companyName){
-        return new ResponseEntity<>(clientService.getAllOrders(companyName), HttpStatus.OK);
-    }
+
 
 }

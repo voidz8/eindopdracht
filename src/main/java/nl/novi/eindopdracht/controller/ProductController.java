@@ -61,7 +61,7 @@ public class ProductController implements Serializable {
     public ResponseEntity<Object> getOperations(@PathVariable(value = "drawingNumber") String drawingNumber){
         return new ResponseEntity<>(productService.getOperations(drawingNumber), HttpStatus.OK);
     }
-    @PostMapping(value = "/products{drawingNumber/operations}")
+    @PostMapping(value = "/products{drawingNumber}/operations}")
     public ResponseEntity<Object> addOperation(@PathVariable(value = "drawingNumber") String drawingNumber, @RequestBody Machine machine){
      productService.addOperation(drawingNumber,machine);
      return new ResponseEntity<>("Successfully added " + machine + " to " + drawingNumber, HttpStatus.OK);
