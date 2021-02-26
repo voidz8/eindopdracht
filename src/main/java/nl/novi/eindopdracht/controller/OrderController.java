@@ -73,11 +73,11 @@ public class OrderController {
     @PostMapping(value = "/orders/{id}/products")
     public ResponseEntity<Object> addProducts(@PathVariable(value = "id") long id, @RequestBody Product product){
         orderService.addProduct(id, product);
-        return new ResponseEntity<>("Added " +product + "successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Added " +product + " successfully.", HttpStatus.OK);
     }
     @DeleteMapping(value = "/orders/{id}/products")
-    public ResponseEntity<Object> removeProduct(@PathVariable(value = "id") long id){
-        orderService.removeProduct(id);
+    public ResponseEntity<Object> removeProduct(@PathVariable(value = "id") long id, @RequestBody Product product){
+        orderService.removeProduct(id, product);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

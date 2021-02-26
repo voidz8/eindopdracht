@@ -2,10 +2,12 @@ package nl.novi.eindopdracht.service;
 
 import nl.novi.eindopdracht.exceptions.OrderNotFoundException;
 import nl.novi.eindopdracht.model.Client;
+import nl.novi.eindopdracht.model.FileDb;
 import nl.novi.eindopdracht.model.Machine;
 import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.model.Product;
 import nl.novi.eindopdracht.repository.OrderRepository;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -102,12 +104,26 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public void removeProduct(long id) {
+    public void removeProduct(long id, Product product) {
         if (!orderRepository.existsById(id)){throw new OrderNotFoundException();}
         Order order = orderRepository.findById(id).get();
-        for (Product product : order.getProducts()){
-            order.removeProduct(product);
-        }
+        order.removeProduct(product);
+       // for (Product product : order.getProducts()){
+         //   order.removeProduct(product);
+       // }
+
+    }
+
+    @Override
+    public void addFile(long id, FileDb fileDb) {
+        if (!orderRepository.existsById(id)){throw new OrderNotFoundException();}
+        Order order = orderRepository.findById(id).get();
+        order.addFile(fileDb);
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void removeFile(long id) {
 
     }
 }

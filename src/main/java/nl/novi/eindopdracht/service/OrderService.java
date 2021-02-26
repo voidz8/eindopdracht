@@ -1,6 +1,7 @@
 package nl.novi.eindopdracht.service;
 
 import nl.novi.eindopdracht.model.Client;
+import nl.novi.eindopdracht.model.FileDb;
 import nl.novi.eindopdracht.model.Machine;
 import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.model.Product;
@@ -24,6 +25,8 @@ public interface OrderService {
     boolean orderExists(long id);
     Collection<Product> getProducts(long id);
     void addProduct(long id, Product product);
-    void removeProduct(long id);
+    void removeProduct(long id, Product product);
+    void addFile(long id, FileDb fileDb);
+    void removeFile(long id);
 
 }

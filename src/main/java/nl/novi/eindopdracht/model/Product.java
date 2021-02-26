@@ -62,10 +62,6 @@ public class Product {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "products")
     private Set<Order> orders = new HashSet<>();
 
-    @Getter
-    @Setter
-    @Lob
-    private Blob image;
 
     public void addOperation(Machine machine){this.operations.add(machine);}
     public void removeOperation(Machine machine){this.operations.remove(machine);
@@ -89,11 +85,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                ", drawingNumber='" + drawingNumber + '\'' +
-                ", operations=" + operations +
-                ", operationTime=" + operationTime +
-                ", orders=" + orders +
-                '}';
+        return "Drawingnumber: " + drawingNumber;
     }
 }

@@ -95,8 +95,6 @@ public class UserServiceImpl implements UserService {
         log.info("before remove: {}",user );
         user.removeRole(role);
         log.info("after remove: {}",user );
-        //for (Role role : user.getRoles()){
-          //  user.removeRole(role);
         userRepository.save(user);
     }
 

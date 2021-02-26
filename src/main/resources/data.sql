@@ -53,8 +53,7 @@ INSERT into planning(date) VALUES ('2020-02-02')
 INSERT into planning(date) VALUES ('2020-02-03')
 INSERT into planning(date) VALUES ('2020-02-04')
 
-INSERT into order_product(order_number, drawing_number) VALUES (1, 'a1')
+INSERT into order_product(order_number, drawing_number) VALUES (1, 'a5'), (1, 'a4')
 INSERT into order_product(order_number, drawing_number) VALUES (2, 'a2')
 INSERT into order_product(order_number, drawing_number) VALUES (3, 'a3')
 
-INSERT into product_machine(drawing_number, machine_id) VALUES ('a1', 1), ('a1', 2)

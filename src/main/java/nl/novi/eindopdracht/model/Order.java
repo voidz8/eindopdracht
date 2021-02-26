@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -73,10 +74,19 @@ public class Order implements Serializable {
     @JoinColumn(name = "order_id")
     private Planning planning;
 
-    public void addProduct(Product product){this.products.add(product);
-    product.getOrders().add(this);}
-    public void removeProduct(Product product){this.products.remove(product);
-    product.getOrders().remove(this);}
+    @Getter
+    @Setter
+    @OneToMany(targetEntity = FileDb.class,
+                fetch = FetchType.EAGER,
+                cascade = CascadeType.PERSIST,
+                mappedBy = "order")
+    private Set<FileDb> files = new HashSet<>();
+
+    public void addFile(FileDb fileDb){this.files.add(fileDb);}
+    public void removeFile(FileDb fileDb){this.files.remove(fileDb);}
+    public void addProduct(Product product){this.products.add(product);}
+    public void removeProduct(Product product){this.products.remove(product);}
+    //product.getOrders().remove(this);}
 
     public Order() {
     }
