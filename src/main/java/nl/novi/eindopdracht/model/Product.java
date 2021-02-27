@@ -34,7 +34,7 @@ public class Product {
 
     @Getter
     @Setter
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JsonIgnore
     @JoinTable(name= "product_machine",
                 joinColumns = @JoinColumn(name = "drawing_number"),
@@ -59,7 +59,7 @@ public class Product {
     @Getter
     @Setter
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "products")
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER,mappedBy = "products")
     private Set<Order> orders = new HashSet<>();
 
 

@@ -2,6 +2,7 @@ package nl.novi.eindopdracht.controller;
 
 import nl.novi.eindopdracht.exceptions.BadRequestException;
 import nl.novi.eindopdracht.model.Client;
+import nl.novi.eindopdracht.model.FileDb;
 import nl.novi.eindopdracht.model.Machine;
 import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.model.Product;
@@ -78,6 +79,16 @@ public class OrderController {
     @DeleteMapping(value = "/orders/{id}/products")
     public ResponseEntity<Object> removeProduct(@PathVariable(value = "id") long id, @RequestBody Product product){
         orderService.removeProduct(id, product);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @PostMapping(value = "/orders/{id}/file")
+    public ResponseEntity<Object> addFile(@PathVariable(value = "id") long id, @RequestBody FileDb fileDb){
+        orderService.addFile(id,fileDb);
+        return new ResponseEntity<>("Added " + fileDb + " successfully.",HttpStatus.OK);
+    }
+    @DeleteMapping(value = "orders/{id}/file")
+    public ResponseEntity<Object> removeFile(@PathVariable(value = "id") long id, @RequestBody FileDb fileDb){
+        orderService.removeFile(id,fileDb);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

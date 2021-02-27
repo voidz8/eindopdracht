@@ -44,7 +44,7 @@ public class Order implements Serializable {
 
     @Getter
     @Setter
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "order_product",
             joinColumns = @JoinColumn(name = "order_number"),
             inverseJoinColumns = @JoinColumn(name = "drawing_number"))
@@ -79,7 +79,7 @@ public class Order implements Serializable {
     @OneToMany(targetEntity = FileDb.class,
                 orphanRemoval = true,
                 fetch = FetchType.EAGER,
-                cascade = CascadeType.PERSIST,
+                cascade = CascadeType.ALL,
                 mappedBy = "order")
     private Set<FileDb> files = new HashSet<>();
 

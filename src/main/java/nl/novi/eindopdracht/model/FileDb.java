@@ -3,6 +3,7 @@ package nl.novi.eindopdracht.model;
 import lombok.Getter;
 import lombok.Setter;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Join;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,16 +21,17 @@ public class FileDb {
     @Id
     @Getter
     @Setter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String fileId;
 
     @Getter
     @Setter
-    private String name;
+    private String fileName;
 
     @Getter
     @Setter
-    private String type;
+    private String fileType;
 
     @Getter
     @Setter
@@ -46,8 +48,8 @@ public class FileDb {
     }
 
     public FileDb(String name, String type, byte[] data) {
-        this.name = name;
-        this.type = type;
+        this.fileName = name;
+        this.fileType = type;
         this.data = data;
     }
 }

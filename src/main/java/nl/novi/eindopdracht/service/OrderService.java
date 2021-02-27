@@ -22,7 +22,6 @@ public interface OrderService {
     long createOrder(Order Order);
     void updateOrder(long id, Order order);
     void updateOrderPartial(long id, Map<String, Object> fields);
-    boolean orderExists(long id);
     Collection<Product> getProducts(long id);
     void addProduct(long id, Product product);
     void removeProduct(long id, Product product);

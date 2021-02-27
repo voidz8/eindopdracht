@@ -70,6 +70,6 @@ public class PlanningServiceImpl implements PlanningService{
             }
         }
         newPlanning.setOrders(orders);
-        planningRepository.save(planning);
+        planningRepository.save(newPlanning);
     }
 }

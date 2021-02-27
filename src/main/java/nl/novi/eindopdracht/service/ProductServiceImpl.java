@@ -73,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
         if (!productRepository.existsByDrawingNumber(drawingNumber)){throw new ProductNotFoundException();}
         Product product = productRepository.findByDrawingNumber(drawingNumber).get();
         Product newProduct = new Product();
-        newProduct.setDrawingNumber(newProduct.getDrawingNumber());
+        newProduct.setDrawingNumber(product.getDrawingNumber());
         newProduct.setAmount(product.getAmount());
         newProduct.setMaterial(product.getMaterial());
         newProduct.setOperationTime(product.getOperationTime());
@@ -85,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         newProduct.setOperations(machines);
-        productRepository.save(product);
+        productRepository.save(newProduct);
     }
 
     @Override

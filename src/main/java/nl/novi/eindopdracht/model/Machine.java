@@ -35,12 +35,12 @@ public class Machine {
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "machines", cascade =CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "machines", cascade =CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<User> users= new HashSet<>();
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "operations")
+    @ManyToMany(mappedBy = "operations", cascade = CascadeType.PERSIST)
     private Set<Product> products = new HashSet<>();
 
     @Getter
@@ -58,6 +58,6 @@ public class Machine {
 
     @Override
     public String toString() {
-        return "machine " + machine ;
+        return "Machine: " + machine ;
     }
 }

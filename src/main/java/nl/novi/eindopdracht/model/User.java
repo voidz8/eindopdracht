@@ -41,7 +41,7 @@ public class User {
 
     @Getter
     @Setter
-    @ManyToMany(cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinTable(name = "user_machine",
             joinColumns = @JoinColumn(name = "username"),

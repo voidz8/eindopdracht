@@ -93,19 +93,19 @@ public class UserServiceImpl implements UserService {
     public void removeRole(String username, Role role) {
         if (!userRepository.existsByUsername(username)){throw new UserNotFoundException();}
         User user = userRepository.findByUsername(username).get();
-        User saveUser = new User();
-        saveUser.setUsername(user.getUsername());
-        saveUser.setPassword(user.getPassword());
-        saveUser.setEmail(user.getEmail());
-        saveUser.setMachines(user.getMachines());
+        User newUser = new User();
+        newUser.setUsername(user.getUsername());
+        newUser.setPassword(user.getPassword());
+        newUser.setEmail(user.getEmail());
+        newUser.setMachines(user.getMachines());
         Set<Role> roles = new HashSet<>();
         for (Role r : user.getRoles()) {
             if(!(r.toString().trim().equals(role.toString().trim()))){
                 roles.add(r);
             }
         }
-        saveUser.setRoles(roles);
-        userRepository.save(saveUser);
+        newUser.setRoles(roles);
+        userRepository.save(newUser);
     }
 
 
@@ -140,6 +140,6 @@ public class UserServiceImpl implements UserService {
             }
         }
         newUser.setMachines(machines);
-        userRepository.save(user);
+        userRepository.save(newUser);
     }
 }

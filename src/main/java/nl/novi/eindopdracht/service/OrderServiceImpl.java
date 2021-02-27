@@ -84,10 +84,6 @@ public class OrderServiceImpl implements OrderService{
         orderRepository.save(order);
     }
 
-    @Override
-    public boolean orderExists(long id) {
-        return orderRepository.existsById(id);
-    }
 
     @Override
     public Collection<Product> getProducts(long id) {
@@ -124,7 +120,7 @@ public class OrderServiceImpl implements OrderService{
             }
         }
         newOrder.setProducts(products);
-        orderRepository.save(order);
+        orderRepository.save(newOrder);
     }
 
     @Override
@@ -155,6 +151,6 @@ public class OrderServiceImpl implements OrderService{
             }
         }
         newOrder.setFiles(fileDbs);
-        orderRepository.save(order);
+        orderRepository.save(newOrder);
     }
 }
