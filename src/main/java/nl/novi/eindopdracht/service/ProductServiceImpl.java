@@ -14,6 +14,7 @@ import java.lang.reflect.Array;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -68,12 +69,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void removeOperation(String drawingNumber) {
+    public void removeOperation(String drawingNumber, Machine machine) {
         if (!productRepository.existsByDrawingNumber(drawingNumber)){throw new ProductNotFoundException();}
         Product product = productRepository.findByDrawingNumber(drawingNumber).get();
-        for (Machine machine : product.getOperations()){
-            product.removeOperation(machine);
+        Product newProduct = new Product();
+        newProduct.setDrawingNumber(newProduct.getDrawingNumber());
+        newProduct.setAmount(product.getAmount());
+        newProduct.setMaterial(product.getMaterial());
+        newProduct.setOperationTime(product.getOperationTime());
+        newProduct.setOrders(product.getOrders());
+        Set<Machine>  machines = new HashSet<>();
+        for (Machine m : product.getOperations()) {
+            if (!(m.toString().trim().equals(machine.toString().trim()))) {
+                machines.add(m);
+            }
         }
+        newProduct.setOperations(machines);
         productRepository.save(product);
     }
 
@@ -99,9 +110,6 @@ public class ProductServiceImpl implements ProductService {
                 case "operationtime":
                     Duration newDuration = Duration.parse(fields.get(field).toString());
                     product.setOperationTime(newDuration);
-                    break;
-                case "operations":
-                    product.setOrders((Set<Order>) fields.get(field));
                     break;
             }
         }

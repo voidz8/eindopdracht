@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -92,10 +93,19 @@ public class UserServiceImpl implements UserService {
     public void removeRole(String username, Role role) {
         if (!userRepository.existsByUsername(username)){throw new UserNotFoundException();}
         User user = userRepository.findByUsername(username).get();
-        log.info("before remove: {}",user );
-        user.removeRole(role);
-        log.info("after remove: {}",user );
-        userRepository.save(user);
+        User saveUser = new User();
+        saveUser.setUsername(user.getUsername());
+        saveUser.setPassword(user.getPassword());
+        saveUser.setEmail(user.getEmail());
+        saveUser.setMachines(user.getMachines());
+        Set<Role> roles = new HashSet<>();
+        for (Role r : user.getRoles()) {
+            if(!(r.toString().trim().equals(role.toString().trim()))){
+                roles.add(r);
+            }
+        }
+        saveUser.setRoles(roles);
+        userRepository.save(saveUser);
     }
 
 
@@ -118,10 +128,18 @@ public class UserServiceImpl implements UserService {
     public void removeMachine(String username, Machine machine) {
         if (!userRepository.existsByUsername(username)){throw new UserNotFoundException();}
         User user = userRepository.findByUsername(username).get();
-        user.removeMachine(machine);
-        //for (Machine machine : user.getMachines()){
-          //  machine.getUsers().remove(user);
-        //}
+        User newUser = new User();
+        newUser.setUsername(user.getUsername());
+        newUser.setPassword(user.getPassword());
+        newUser.setEmail(user.getEmail());
+        newUser.setRoles(user.getRoles());
+        Set<Machine> machines = new HashSet<>();
+        for(Machine m : user.getMachines()){
+            if (!(m.toString().trim().equals(machine.toString().trim()))){
+                machines.add(m);
+            }
+        }
+        newUser.setMachines(machines);
         userRepository.save(user);
     }
 }

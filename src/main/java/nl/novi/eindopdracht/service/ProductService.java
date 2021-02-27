@@ -20,5 +20,5 @@ public interface ProductService {
     void updateProductPartial(String drawingNumber, Map<String, Object> fields);
     Collection<Machine> getOperations(String drawingNumber);
     void addOperation(String drawingNumber, Machine machine);
-    void removeOperation(String drawingNumber);
+    void removeOperation(String drawingNumber, Machine machine);
 }

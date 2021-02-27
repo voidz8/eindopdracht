@@ -43,7 +43,6 @@ public class Planning {
 
     public void addOrder(Order order){this.orders.add(order);
     order.setPlanning(this);}
-    public void removeOrder(Order order){this.orders.remove(order);}
 
     public Planning() {
     }

@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.temporal.Temporal;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -107,11 +108,23 @@ public class OrderServiceImpl implements OrderService{
     public void removeProduct(long id, Product product) {
         if (!orderRepository.existsById(id)){throw new OrderNotFoundException();}
         Order order = orderRepository.findById(id).get();
-        order.removeProduct(product);
-       // for (Product product : order.getProducts()){
-         //   order.removeProduct(product);
-       // }
-
+        Order newOrder = new Order();
+        newOrder.setClient(order.getClient());
+        newOrder.setProductionDate(order.getProductionDate());
+        newOrder.setOrderNumber(order.getOrderNumber());
+        newOrder.setOperations(order.getOperations());
+        newOrder.setPlanning(order.getPlanning());
+        newOrder.setDeliveryDate(order.getDeliveryDate());
+        newOrder.setProductionDate(order.getProductionDate());
+        newOrder.setFiles(order.getFiles());
+        Set<Product> products = new HashSet<>();
+        for (Product p: order.getProducts()){
+            if (!(p.toString().trim().equals(product.toString().trim()))){
+                products.add(p);
+            }
+        }
+        newOrder.setProducts(products);
+        orderRepository.save(order);
     }
 
     @Override
@@ -123,7 +136,25 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public void removeFile(long id) {
-
+    public void removeFile(long id, FileDb fileDb) {
+        if (!orderRepository.existsById(id)){throw new OrderNotFoundException();}
+        Order order = orderRepository.findById(id).get();
+        Order newOrder = new Order();
+        newOrder.setClient(order.getClient());
+        newOrder.setProductionDate(order.getProductionDate());
+        newOrder.setOrderNumber(order.getOrderNumber());
+        newOrder.setOperations(order.getOperations());
+        newOrder.setPlanning(order.getPlanning());
+        newOrder.setDeliveryDate(order.getDeliveryDate());
+        newOrder.setProductionDate(order.getProductionDate());
+        newOrder.setProducts(order.getProducts());
+        Set<FileDb> fileDbs = new HashSet<>();
+        for (FileDb f : order.getFiles()){
+            if (!(f.toString().trim().equals(fileDb.toString().trim()))){
+                fileDbs.add(f);
+            }
+        }
+        newOrder.setFiles(fileDbs);
+        orderRepository.save(order);
     }
 }

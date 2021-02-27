@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.crypto.Mac;
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.Map;
@@ -61,14 +62,14 @@ public class ProductController implements Serializable {
     public ResponseEntity<Object> getOperations(@PathVariable(value = "drawingNumber") String drawingNumber){
         return new ResponseEntity<>(productService.getOperations(drawingNumber), HttpStatus.OK);
     }
-    @PostMapping(value = "/products{drawingNumber}/operations}")
+    @PostMapping(value = "/products/{drawingNumber}/operations")
     public ResponseEntity<Object> addOperation(@PathVariable(value = "drawingNumber") String drawingNumber, @RequestBody Machine machine){
      productService.addOperation(drawingNumber,machine);
      return new ResponseEntity<>("Successfully added " + machine + " to " + drawingNumber, HttpStatus.OK);
     }
     @DeleteMapping(value = "products/{drawingNumber}/operations")
-    public ResponseEntity<Object> removeOperation(@PathVariable(value = "drawingNumber") String drawingNumber){
-        productService.removeOperation(drawingNumber);
+    public ResponseEntity<Object> removeOperation(@PathVariable(value = "drawingNumber") String drawingNumber, @RequestBody Machine machine){
+        productService.removeOperation(drawingNumber, machine);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

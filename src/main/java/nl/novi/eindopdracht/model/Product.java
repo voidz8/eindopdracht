@@ -64,8 +64,6 @@ public class Product {
 
 
     public void addOperation(Machine machine){this.operations.add(machine);}
-    public void removeOperation(Machine machine){this.operations.remove(machine);
-    machine.getProducts().remove(this);}
 
     public Product(String drawingNumber) {
         this.drawingNumber = drawingNumber;

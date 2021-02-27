@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class PlanningServiceImpl implements PlanningService{
@@ -58,7 +60,16 @@ public class PlanningServiceImpl implements PlanningService{
     public void removeOrder(long id, Order order) {
         if (!planningRepository.existsById(id)){throw new PlanningNotFoundException();}
         Planning planning = planningRepository.findById(id).get();
-        planning.removeOrder(order);
+        Planning newPlanning = new Planning();
+        newPlanning.setId(planning.getId());
+        newPlanning.setDate(planning.getDate());
+        Set<Order> orders = new HashSet<>();
+        for (Order o : planning.getOrders()){
+            if (!(o.toString().trim().equals(order.toString().trim()))){
+                orders.add(o);
+            }
+        }
+        newPlanning.setOrders(orders);
         planningRepository.save(planning);
     }
 }

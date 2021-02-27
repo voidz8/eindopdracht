@@ -27,6 +27,6 @@ public interface OrderService {
     void addProduct(long id, Product product);
     void removeProduct(long id, Product product);
     void addFile(long id, FileDb fileDb);
-    void removeFile(long id);
+    void removeFile(long id, FileDb fileDb);
 
 }

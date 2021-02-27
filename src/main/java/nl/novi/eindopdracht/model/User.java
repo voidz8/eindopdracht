@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -49,7 +50,7 @@ public class User {
 
     @Getter
     @Setter
-    @ManyToMany(cascade =CascadeType.ALL)
+    @ManyToMany(cascade =CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "username"),
@@ -58,13 +59,8 @@ public class User {
 
     public void addRole(Role role){this.roles.add(role);
     role.getUsers().add(this);}
-    public void removeRole(Role role){this.roles.remove(role);}
-    //role.getUsers().remove(this);}
     public void addMachine(Machine machine){this.machines.add(machine);
     machine.getUsers().add(this);}
-
-    public void removeMachine(Machine machine){this.machines.remove(machine);
-    machine.getUsers().remove(this);}
 
     public User() {
     }

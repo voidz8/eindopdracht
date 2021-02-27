@@ -65,10 +65,6 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{" +
-                "companyName='" + companyName + '\'' +
-                ", email='" + email + '\'' +
-                ", debtorNumber=" + debtorNumber +
-                '}';
+        return companyName;
     }
 }
