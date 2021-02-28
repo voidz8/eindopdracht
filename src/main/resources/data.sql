@@ -11,7 +11,6 @@ INSERT into orders(company_name, production_date, delivery_date) VALUES ( 'Profp
 INSERT into machine(machine) VALUES ('PORTAALFREES')
 INSERT into machine(machine) VALUES ('CONVENTIONEEL')
 INSERT into machine(machine) VALUES ('LASER')
-INSERT into machine(machine) VALUES ('DRAAIBANK')
 INSERT into machine(machine) VALUES ('BUIGBANK')
 INSERT into machine(machine) VALUES ('ZAAG')
 
@@ -29,16 +28,14 @@ INSERT into app_user(username, email, password) VALUES ('bolton', 'bolton@exampl
 INSERT into app_user(username, email, password) VALUES ('arme', 'arme@example.com', '$2y$12$I6fZQ7QIDGcw1s/QyvwVnu9G008ENu0Vp2YuxgebYNX4MdT3HTkIa')
 
 INSERT into role(name) VALUES ('ROLE_ADMIN')
-INSERT into role(name) VALUES ('ROLE_USER')
-INSERT into role(name) VALUES ('ROLE_MACHINEPROGRAMMER')
 INSERT into role(name) VALUES ('ROLE_PLANNER')
 INSERT into role(name) VALUES ('ROLE_WORKSHOPWORKER')
 
 INSERT into user_role(username, role_id) VALUES ('chip', 1)
 INSERT into user_role(username, role_id) VALUES ('harry', 2)
 INSERT into user_role(username, role_id) VALUES ('phase', 3)
-INSERT into user_role(username, role_id) VALUES ('flame', 4)
-INSERT into user_role(username, role_id) VALUES ('bolton', 5)
+INSERT into user_role(username, role_id) VALUES ('flame', 1)
+INSERT into user_role(username, role_id) VALUES ('bolton', 2)
 
 INSERT into user_machine(username, machine_id) VALUES ('chip', 1)
 INSERT into user_machine(username, machine_id) VALUES ('chip', 2)
@@ -46,7 +43,7 @@ INSERT into user_machine(username, machine_id) VALUES ('harry', 2)
 INSERT into user_machine(username, machine_id) VALUES ('phase', 3)
 INSERT into user_machine(username, machine_id) VALUES ('flame', 4)
 INSERT into user_machine(username, machine_id) VALUES ('bolton', 5)
-INSERT into user_machine(username, machine_id) VALUES ('arme', 6)
+
 
 INSERT into planning(date) VALUES ('2020-02-01')
 INSERT into planning(date) VALUES ('2020-02-02')

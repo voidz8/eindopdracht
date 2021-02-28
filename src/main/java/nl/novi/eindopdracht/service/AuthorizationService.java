@@ -73,7 +73,7 @@ public class AuthorizationService {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null){
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+            Role userRole = roleRepository.findByName(ERole.ROLE_WORKSHOPWORKER)
                     .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
             roles.add(userRole);
         } else {
@@ -84,23 +84,13 @@ public class AuthorizationService {
                                 .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
                         roles.add(adminRole);
                         break;
-                    case "PROGRAMMER":
-                        Role programmerRole = roleRepository.findByName(ERole.ROLE_MACHINEPROGRAMMER)
-                                .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
-                        roles.add(programmerRole);
-                        break;
                     case "PLANNER":
                         Role plannerRole = roleRepository.findByName(ERole.ROLE_PLANNER)
                                 .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
                         roles.add(plannerRole);
                         break;
-                    case "WORKER":
-                        Role workerRole = roleRepository.findByName(ERole.ROLE_WORKSHOPWORKER)
-                                .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
-                        roles.add(workerRole);
-                        break;
                     default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                        Role userRole = roleRepository.findByName(ERole.ROLE_WORKSHOPWORKER)
                                 .orElseThrow(()-> new RuntimeException(ROLE_NOT_FOUND_ERROR));
                         roles.add(userRole);
                 }

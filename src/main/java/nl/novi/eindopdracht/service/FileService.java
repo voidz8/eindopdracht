@@ -1,6 +1,7 @@
 package nl.novi.eindopdracht.service;
 
 import nl.novi.eindopdracht.model.FileDb;
+import nl.novi.eindopdracht.model.Order;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -10,4 +11,5 @@ public interface FileService {
     Optional<FileDb> getFile(String fileId);
     List<FileDb> getAllFiles();
     FileDb storeFile(MultipartFile file);
+    void deleteFile(String fileId);
 }

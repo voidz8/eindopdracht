@@ -81,11 +81,13 @@ public class OrderController {
         orderService.removeProduct(id, product);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    //TODO
     @PostMapping(value = "/orders/{id}/file")
     public ResponseEntity<Object> addFile(@PathVariable(value = "id") long id, @RequestBody FileDb fileDb){
         orderService.addFile(id,fileDb);
         return new ResponseEntity<>("Added " + fileDb + " successfully.",HttpStatus.OK);
     }
+    //TODO
     @DeleteMapping(value = "orders/{id}/file")
     public ResponseEntity<Object> removeFile(@PathVariable(value = "id") long id, @RequestBody FileDb fileDb){
         orderService.removeFile(id,fileDb);

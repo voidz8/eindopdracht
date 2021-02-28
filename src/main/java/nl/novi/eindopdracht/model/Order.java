@@ -79,7 +79,7 @@ public class Order implements Serializable {
     @OneToMany(targetEntity = FileDb.class,
                 orphanRemoval = true,
                 fetch = FetchType.EAGER,
-                cascade = CascadeType.ALL,
+                cascade = CascadeType.PERSIST,
                 mappedBy = "order")
     private Set<FileDb> files = new HashSet<>();
 

@@ -2,6 +2,7 @@ package nl.novi.eindopdracht.controller;
 
 import com.sun.istack.ByteArrayDataSource;
 import nl.novi.eindopdracht.model.FileDb;
+import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +51,11 @@ public class FileController {
                 .path(fileName.getFileName())
                 .toUriString();
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("fileId: " + fileName.getFileId(), HttpStatus.CREATED);
+    }
+    @DeleteMapping(value = "/files/{fileId}")
+    public ResponseEntity<Object> deleteFile(@PathVariable(value = "fileId") String fileId){
+        fileService.deleteFile(fileId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

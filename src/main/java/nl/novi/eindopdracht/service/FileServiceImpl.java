@@ -1,7 +1,9 @@
 package nl.novi.eindopdracht.service;
 
+import nl.novi.eindopdracht.exceptions.FileNotFoundException;
 import nl.novi.eindopdracht.exceptions.FileStorageException;
 import nl.novi.eindopdracht.model.FileDb;
+import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public Optional<FileDb> getFile(String fileId) {
+        if (!fileRepository.existsById(fileId)){throw new FileNotFoundException();}
         return fileRepository.findByFileId(fileId);
     }
 
@@ -45,4 +48,9 @@ public class FileServiceImpl implements FileService {
         return fileRepository.findAll();
     }
 
+    @Override
+    public void deleteFile(String fileId) {
+        if (!fileRepository.existsById(fileId)){throw new FileNotFoundException();}
+        fileRepository.deleteById(fileId);
+    }
 }

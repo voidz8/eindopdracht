@@ -1,11 +1,14 @@
 package nl.novi.eindopdracht.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Join;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,14 +38,15 @@ public class FileDb {
 
     @Getter
     @Setter
-    @Lob
     private byte[] data;
 
     @Getter
     @Setter
-    @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "order_number")
     private Order order;
+
 
     public FileDb() {
     }
@@ -51,5 +55,10 @@ public class FileDb {
         this.fileName = name;
         this.fileType = type;
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return fileId;
     }
 }

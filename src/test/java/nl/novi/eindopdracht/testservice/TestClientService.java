@@ -57,21 +57,28 @@ public class TestClientService {
         assertEquals(client.getCompanyName(), clientService.createClient(client));
     }
 
-   /*@Test
+   @Test
     public void testGetClient() {
-       client = new Client("novi", "info@novi.nl", 111L);
-       String name1 = client.getCompanyName();
-        Mockito
-        .when(clientRepository.findByCompanyName(name1))
-                .thenReturn(Optional.ofNullable(client));
+        //client= new Client("novi", "info@novi.nl", 111L);
+       //String name1 = "novi";
 
-        String name = "novi";
-        String expected = "info@novi.nl";
+       //when(clientRepository.findByCompanyName(name1)).thenReturn(Optional.of(new Client("novi", "info@novi.nl", 111L)));
 
-        Optional<Client> found = clientService.getClientByName(name);
+       //Optional<Client> found = clientService.getClientByName(name1);
 
-        assertEquals(expected, found.get().getEmail());
-    }*/
+       //assertEquals(found.get().getCompanyName(),client.getCompanyName());
+
+        //Mockito
+        //.when(clientRepository.findByCompanyName(name1))
+         //       .thenReturn(Optional.ofNullable(client));
+
+        //String name = "novi";
+        //String expected = "info@novi.nl";
+
+        //Optional<Client> found = clientService.getClientByName(name);
+
+        //assertEquals(expected, found.get().getEmail());
+    }
 
 
     @Test
