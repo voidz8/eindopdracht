@@ -52,9 +52,15 @@ public class Machine {
     public Machine() {
     }
 
+    public Machine(long id, EMachine machine) {
+        this.id = id;
+        this.machine = machine;
+    }
+
     public Machine(EMachine machine) {
         this.machine = machine;
     }
+
 
     @Override
     public String toString() {

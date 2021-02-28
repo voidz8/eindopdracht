@@ -74,16 +74,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "order_id")
     private Planning planning;
 
-    @Getter
-    @Setter
-    @OneToMany(targetEntity = FileDb.class,
-                orphanRemoval = true,
-                fetch = FetchType.EAGER,
-                cascade = CascadeType.PERSIST,
-                mappedBy = "order")
-    private Set<FileDb> files = new HashSet<>();
 
-    public void addFile(FileDb fileDb){this.files.add(fileDb);}
     public void addProduct(Product product){this.products.add(product);}
 
     public Order() {

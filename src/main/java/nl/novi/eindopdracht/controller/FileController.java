@@ -1,8 +1,6 @@
 package nl.novi.eindopdracht.controller;
 
-import com.sun.istack.ByteArrayDataSource;
 import nl.novi.eindopdracht.model.FileDb;
-import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
@@ -33,9 +30,9 @@ public class FileController {
     public ResponseEntity<Object> getAllFiles(){
         return new ResponseEntity<>(fileService.getAllFiles(), HttpStatus.OK);
     }
-    @GetMapping(value = "/files/{id}")
-    public ResponseEntity<ByteArrayResource> getFile(@PathVariable(value = "id") String id, HttpServletRequest  request){
-        Optional<FileDb> fileDb = fileService.getFile(id);
+    @GetMapping(value = "/files/{orderNumber}")
+    public ResponseEntity<ByteArrayResource> getFile(@PathVariable(value = "orderNumber") String orderNumber, HttpServletRequest  request){
+        Optional<FileDb> fileDb = fileService.getFile(orderNumber);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(fileDb.get().getFileType()))
@@ -43,8 +40,8 @@ public class FileController {
                 .body(new ByteArrayResource(fileDb.get().getData()));
     }
     @PostMapping(value = "/files")
-    public ResponseEntity<Object> uploadFile(@RequestParam("file")MultipartFile file){
-        FileDb fileName = fileService.storeFile(file);
+    public ResponseEntity<Object> uploadFile(@RequestParam("file")MultipartFile file, String orderNumber){
+        FileDb fileName = fileService.storeFile(file, orderNumber);
 
         String fileDownloadUri= ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile")
@@ -53,9 +50,10 @@ public class FileController {
 
         return new ResponseEntity<>("fileId: " + fileName.getFileId(), HttpStatus.CREATED);
     }
-    @DeleteMapping(value = "/files/{fileId}")
-    public ResponseEntity<Object> deleteFile(@PathVariable(value = "fileId") String fileId){
-        fileService.deleteFile(fileId);
+    @DeleteMapping(value = "/files/{orderNumber}")
+    public ResponseEntity<Object> deleteFile(@PathVariable(value = "orderNumber") String orderNumber){
+        fileService.deleteFile(orderNumber);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
 }

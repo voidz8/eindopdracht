@@ -7,5 +7,7 @@ import java.util.Optional;
 
 
 public interface FileRepository extends JpaRepository<FileDb, String> {
-    Optional<FileDb> findByFileId(String fileId);
+    boolean existsByOrderNumber(String orderNumber);
+    Optional<FileDb> findByOrderNumber(String orderNumber);
+    void deleteByOrderNumber(String orderNumber);
 }

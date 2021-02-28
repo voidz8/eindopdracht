@@ -4,7 +4,6 @@ import nl.novi.eindopdracht.model.Machine;
 import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.model.Product;
 
-import java.time.Duration;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;

@@ -27,18 +27,6 @@ public class ClientExcelDownloadController {
     @Autowired
     private ClientRepository clientRepository;
 
-/*
-   @GetMapping(value = "/download}")
-    public ResponseEntity<InputStreamResource> getFile() {
-        String filename = "C:/";
-        InputStreamResource file = new InputStreamResource(clientService.load());
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
-                .contentType(MediaType.parseMediaType("application/vnd.ms-excel")).body(file);
-
-    }
-*/
     @RequestMapping("/downloadFile")
     public void downloadFile(HttpServletRequest request, HttpServletResponse response) {
 

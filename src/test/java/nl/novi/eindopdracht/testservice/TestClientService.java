@@ -22,6 +22,7 @@ import java.util.stream.Stream;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.ArgumentMatchers.doubleThat;
@@ -57,29 +58,6 @@ public class TestClientService {
         assertEquals(client.getCompanyName(), clientService.createClient(client));
     }
 
-   @Test
-    public void testGetClient() {
-        //client= new Client("novi", "info@novi.nl", 111L);
-       //String name1 = "novi";
-
-       //when(clientRepository.findByCompanyName(name1)).thenReturn(Optional.of(new Client("novi", "info@novi.nl", 111L)));
-
-       //Optional<Client> found = clientService.getClientByName(name1);
-
-       //assertEquals(found.get().getCompanyName(),client.getCompanyName());
-
-        //Mockito
-        //.when(clientRepository.findByCompanyName(name1))
-         //       .thenReturn(Optional.ofNullable(client));
-
-        //String name = "novi";
-        //String expected = "info@novi.nl";
-
-        //Optional<Client> found = clientService.getClientByName(name);
-
-        //assertEquals(expected, found.get().getEmail());
-    }
-
 
     @Test
     public void testDeleteClient(){
@@ -88,10 +66,4 @@ public class TestClientService {
         verify(clientRepository, times(1)).deleteById(client.getCompanyName());
     }
 
-   /* @Test
-    public void testUpdateClient(){
-        Client client = new Client("novi", "info@novi.nl",111L);
-        when(clientService.updateClient(client.getCompanyName(), client)).thenReturn(client);
-        mvc.perform(put("/clients/") + client.getCompanyName()).
-    }*/
 }

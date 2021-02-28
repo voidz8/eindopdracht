@@ -1,13 +1,9 @@
 package nl.novi.eindopdracht.controller;
 
-import nl.novi.eindopdracht.exceptions.BadRequestException;
-import nl.novi.eindopdracht.model.Client;
-import nl.novi.eindopdracht.model.FileDb;
-import nl.novi.eindopdracht.model.Machine;
+
 import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.model.Product;
 import nl.novi.eindopdracht.service.OrderService;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.lang.annotation.Repeatable;
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 @RestController
 public class OrderController {
@@ -81,17 +74,4 @@ public class OrderController {
         orderService.removeProduct(id, product);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    //TODO
-    @PostMapping(value = "/orders/{id}/file")
-    public ResponseEntity<Object> addFile(@PathVariable(value = "id") long id, @RequestBody FileDb fileDb){
-        orderService.addFile(id,fileDb);
-        return new ResponseEntity<>("Added " + fileDb + " successfully.",HttpStatus.OK);
-    }
-    //TODO
-    @DeleteMapping(value = "orders/{id}/file")
-    public ResponseEntity<Object> removeFile(@PathVariable(value = "id") long id, @RequestBody FileDb fileDb){
-        orderService.removeFile(id,fileDb);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
 }

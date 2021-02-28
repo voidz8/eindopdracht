@@ -1,6 +1,5 @@
 package nl.novi.eindopdracht.controller;
 
-import lombok.Getter;
 import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.model.Planning;
 import nl.novi.eindopdracht.service.PlanningService;

@@ -2,17 +2,12 @@ package nl.novi.eindopdracht.service;
 
 import nl.novi.eindopdracht.exceptions.ProductNotFoundException;
 import nl.novi.eindopdracht.model.Machine;
-import nl.novi.eindopdracht.model.Order;
 import nl.novi.eindopdracht.model.Product;
 import nl.novi.eindopdracht.repository.ProductRepository;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;

@@ -2,12 +2,16 @@ package nl.novi.eindopdracht.controller;
 
 import nl.novi.eindopdracht.exceptions.BadRequestException;
 import nl.novi.eindopdracht.exceptions.ClientNotFoundException;
+import nl.novi.eindopdracht.exceptions.FileNotFoundException;
+import nl.novi.eindopdracht.exceptions.FileStorageException;
 import nl.novi.eindopdracht.exceptions.ForbiddenException;
 import nl.novi.eindopdracht.exceptions.MachineNotFoundException;
 import nl.novi.eindopdracht.exceptions.OrderNotFoundException;
+import nl.novi.eindopdracht.exceptions.PlanningNotFoundException;
 import nl.novi.eindopdracht.exceptions.ProductNotFoundException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.exceptions.UserNotFoundException;
+import nl.novi.eindopdracht.exceptions.UsernameNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,6 +51,22 @@ public class ExceptionController {
     }
     @ExceptionHandler(value = RecordNotFoundException.class)
     public ResponseEntity<Object> exception(RecordNotFoundException exception) {
+        return ResponseEntity.notFound().build();
+    }
+    @ExceptionHandler(value = FileStorageException.class)
+    public ResponseEntity<Object> exception(FileStorageException exception){
+        return ResponseEntity.notFound().build();
+    }
+    @ExceptionHandler(value = FileNotFoundException.class)
+    public ResponseEntity<Object> exception(FileNotFoundException exception){
+        return ResponseEntity.notFound().build();
+    }
+    @ExceptionHandler(value = PlanningNotFoundException.class)
+    public ResponseEntity<Object> exception(PlanningNotFoundException exception){
+        return ResponseEntity.notFound().build();
+    }
+    @ExceptionHandler(value = UsernameNotFoundException.class)
+    public ResponseEntity<Object> exception(UsernameNotFoundException exception){
         return ResponseEntity.notFound().build();
     }
 }
